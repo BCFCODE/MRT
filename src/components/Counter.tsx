@@ -11,8 +11,12 @@ class Counter extends Component<ICounterProps, ICounterState> {
   render() {
     return (
       <>
-        <span>{this.formatCount()}</span>
-        <button type="button">Increment</button>
+        <span className="badge text-badge-primary m-2">
+          {this.formatCount()}
+        </span>
+        <button className="btn btn-secondary btn-sm" type="button">
+          Increment
+        </button>
       </>
     );
   }

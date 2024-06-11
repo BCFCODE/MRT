@@ -4,13 +4,22 @@ export interface ICounterProps {}
 export interface ICounterState {}
 
 class Counter extends Component<ICounterProps, ICounterState> {
+  state = {
+    count: 0,
+  };
+
   render() {
     return (
       <>
-        <h1>Hello World</h1>
+        <span>{this.formatCount()}</span>
         <button type="button">Increment</button>
       </>
     );
+  }
+
+  formatCount() {
+    const { count } = this.state;
+    return count === 0 ? "Zero" : count;
   }
 }
 

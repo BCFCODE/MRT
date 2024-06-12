@@ -15,6 +15,10 @@ class Counter extends Component<ICounterProps, ICounterState> {
     tags: ["tag1", "tag2", "tag3"],
   };
 
+  handleIncrement() {
+    console.log(this)
+  }
+
   render() {
     const { tags } = this.state;
     const { chipText, chipColor } = this.chipData();
@@ -22,7 +26,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
     return (
       <>
         <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
-        <Button variant="contained" color="success" type="button">
+        <Button onClick={this.handleIncrement} variant="contained" color="success" type="button">
           Increment
         </Button>
         <ul>

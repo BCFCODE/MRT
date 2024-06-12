@@ -3,7 +3,9 @@ import { Button, Chip } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
 export interface ICounterProps {}
-export interface ICounterState {}
+export interface ICounterState {
+  count: number;
+}
 
 const chipStyles: CSSProperties = {
   margin: 10,
@@ -15,9 +17,12 @@ class Counter extends Component<ICounterProps, ICounterState> {
     tags: ["tag1", "tag2", "tag3"],
   };
 
-  handleIncrement() {
-    console.log(this)
-  }
+  handleIncrement = () => {
+    console.log(this);
+    this.setState(({ count }) => ({
+      count: count + 1,
+    }));
+  };
 
   render() {
     const { tags } = this.state;
@@ -26,7 +31,12 @@ class Counter extends Component<ICounterProps, ICounterState> {
     return (
       <>
         <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
-        <Button onClick={this.handleIncrement} variant="contained" color="success" type="button">
+        <Button
+          onClick={this.handleIncrement}
+          variant="contained"
+          color="success"
+          type="button"
+        >
           Increment
         </Button>
         <ul>

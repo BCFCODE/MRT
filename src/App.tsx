@@ -1,10 +1,8 @@
-import './App.css'
+import "./App.css";
+import { Movies } from "./components/Movies";
 
 function App() {
-
-  return (
-   <main>Hello World</main>
-  )
+  return <Movies />;
 }
 
-export default App
+export default App;

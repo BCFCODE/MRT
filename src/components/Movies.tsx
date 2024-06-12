@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import { deleteMovie, getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
+import { Movie } from "../types/Movies";
 
 function createData(
   name: string,
@@ -19,22 +20,20 @@ function createData(
   return { name, calories, fat, carbs, protein };
 }
 
-const headers = ["Title", "Genre", "Stock", "Rate", ""];
-
-const movies = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export interface IMoviesProps {}
-export interface IMoviesState {}
+export interface IMoviesState {
+  movies: Movie[];
+}
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
     movies: getMovies(),
+  };
+
+  handleDelete = (id: string) => {
+    this.setState(({ movies }) => ({
+      movies: movies.filter((movie) => movie._id !== id),
+    }));
   };
 
   render() {
@@ -45,25 +44,34 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
         <Table sx={{ minWidth: "auto" }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {headers.map((header, i) => (
-                <TableCell align={i ? "right" : "left"}>{header}</TableCell>
+              {["Title", "Genre", "Stock", "Rate", ""].map((header, i) => (
+                <TableCell
+                  sx={{ fontWeight: "bold" }}
+                  align={i ? "right" : "left"}
+                >
+                  {header}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {movies.map((row) => (
+            {movies.map((movie) => (
               <TableRow
-                key={row._id}
+                key={movie._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.title}
+                  {movie.title}
                 </TableCell>
-                <TableCell align="right">{row.genre.name}</TableCell>
-                <TableCell align="right">{row.numberInStock}</TableCell>
-                <TableCell align="right">{row.dailyRentalRate}</TableCell>
+                <TableCell align="right">{movie.genre.name}</TableCell>
+                <TableCell align="right">{movie.numberInStock}</TableCell>
+                <TableCell align="right">{movie.dailyRentalRate}</TableCell>
                 <TableCell align="right">
-                  <Button color="error" variant="contained">
+                  <Button
+                    onClick={() => this.handleDelete(movie._id)}
+                    color="error"
+                    variant="contained"
+                  >
                     Delete
                   </Button>
                 </TableCell>

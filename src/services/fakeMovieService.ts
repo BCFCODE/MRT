@@ -91,8 +91,8 @@ export function getMovie(id: string) {
 //   return movieInDb;
 // }
 
-export function deleteMovie(id: string) {
-  const movieInDb = movies.find((m) => m._id === id);
-  movieInDb && movies.splice(movies.indexOf(movieInDb), 1);
-  return movieInDb;
-}
+// export function deleteMovie(id: string) {
+//   const movieInDb = movies.find((m) => m._id === id);
+//   movieInDb && movies.splice(movies.indexOf(movieInDb), 1);
+//   return movieInDb;
+// }

@@ -12,9 +12,11 @@ const chipStyles: CSSProperties = {
 class Counter extends Component<ICounterProps, ICounterState> {
   state = {
     count: 10,
+    tags: ["tag1", "tag2", "tag3"],
   };
 
   render() {
+    const { tags } = this.state;
     const { chipText, chipColor } = this.chipData();
 
     return (
@@ -23,15 +25,19 @@ class Counter extends Component<ICounterProps, ICounterState> {
         <Button variant="contained" color="success" type="button">
           Increment
         </Button>
+        <ul>
+          {tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
       </>
     );
   }
 
   private chipData() {
+    const { count } = this.state;
     const chipText = this.formatCount();
-    const chipColor = (this.state.count > 0 ? "primary" : "error") as
-      | "primary"
-      | "error";
+    const chipColor = (count > 0 ? "primary" : "error") as "primary" | "error";
     return { chipText, chipColor };
   }
 

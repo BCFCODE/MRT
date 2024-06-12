@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Counter } from "./Counter";
 
 export interface ICountersProps {}
-export interface ICountersState {}
+export interface ICountersState {
+  counters: { id: number; value: number }[];
+}
 
 class Counters extends Component<ICountersProps, ICountersState> {
   state = {
@@ -19,7 +21,7 @@ class Counters extends Component<ICountersProps, ICountersState> {
     return (
       <>
         {counters.map((counter) => (
-          <Counter key={counter.id} />
+          <Counter key={counter.id} value={counter.value} />
         ))}
       </>
     );

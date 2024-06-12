@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Box, Button, Chip } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
-export interface ICounterProps {}
+export interface ICounterProps {
+  value: number;
+  selected?: boolean;
+}
 export interface ICounterState {
-  count: number;
+  value: number;
 }
 
 const chipStyles: CSSProperties = {
@@ -13,14 +16,13 @@ const chipStyles: CSSProperties = {
 };
 class Counter extends Component<ICounterProps, ICounterState> {
   state = {
-    count: 10,
+    value: this.props.value,
     tags: ["tag1", "tag2", "tag3"],
   };
 
-  handleIncrement = (newValue: string) => {
-    console.log(newValue);
-    this.setState(({ count }) => ({
-      count: count + 1,
+  handleIncrement = () => {
+    this.setState(({ value }) => ({
+      value: value + 1,
     }));
   };
 
@@ -31,9 +33,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
       <Box>
         <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
         <Button
-          onClick={() =>
-            this.handleIncrement("New value passed as an argument")
-          }
+          onClick={this.handleIncrement}
           variant="contained"
           color="success"
           type="button"
@@ -45,14 +45,14 @@ class Counter extends Component<ICounterProps, ICounterState> {
   }
 
   private chipData() {
-    const { count } = this.state;
+    const { value: count } = this.state;
     const chipText = this.formatCount();
     const chipColor = (count > 0 ? "primary" : "error") as "primary" | "error";
     return { chipText, chipColor };
   }
 
   formatCount() {
-    const { count } = this.state;
+    const { value: count } = this.state;
     return count === 0 ? "Zero" : count;
   }
 }

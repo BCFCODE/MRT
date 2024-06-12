@@ -1,10 +1,10 @@
 import { Component } from "react";
 // import "./App.css";
-import { Counter } from "./components/Counter";
+import { Counters } from "./components/Counters";
 
 class App extends Component {
   render() {
-    return <Counter />;
+    return <Counters />;
   }
 }
 

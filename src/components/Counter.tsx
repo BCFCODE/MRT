@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Chip } from "@mui/material";
+import { Box, Button, Chip } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
 export interface ICounterProps {}
@@ -25,26 +25,22 @@ class Counter extends Component<ICounterProps, ICounterState> {
   };
 
   render() {
-    const { tags } = this.state;
     const { chipText, chipColor } = this.chipData();
 
     return (
-      <>
+      <Box>
         <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
         <Button
-          onClick={() => this.handleIncrement("New value passed as an argument")}
+          onClick={() =>
+            this.handleIncrement("New value passed as an argument")
+          }
           variant="contained"
           color="success"
           type="button"
         >
           Increment
         </Button>
-        <ul>
-          {tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-        </ul>
-      </>
+      </Box>
     );
   }
 

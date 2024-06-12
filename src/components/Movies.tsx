@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 
 function createData(
   name: string,
@@ -18,9 +19,9 @@ function createData(
   return { name, calories, fat, carbs, protein };
 }
 
-const headers = ["Title", "Genre", "Stock", "Rate", ''];
+const headers = ["Title", "Genre", "Stock", "Rate", ""];
 
-const rows = [
+const movies = [
   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
   createData("Eclair", 262, 16.0, 24, 6.0),
@@ -41,7 +42,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
     return (
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: "auto" }} aria-label="simple table">
           <TableHead>
             <TableRow>
               {headers.map((header, i) => (
@@ -50,18 +51,22 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {movies.map((row) => (
               <TableRow
-                key={row.name}
+                key={row._id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.title}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{row.genre.name}</TableCell>
+                <TableCell align="right">{row.numberInStock}</TableCell>
+                <TableCell align="right">{row.dailyRentalRate}</TableCell>
+                <TableCell align="right">
+                  <Button color="error" variant="contained">
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -7,29 +7,32 @@ export interface ICounterState {}
 
 const chipStyles: CSSProperties = {
   margin: 10,
+  fontWeight: "bold",
 };
 class Counter extends Component<ICounterProps, ICounterState> {
   state = {
-    count: 0,
+    count: 10,
   };
 
   render() {
+    const { chipText, chipColor } = this.chipData();
+
     return (
       <>
-        <Chip
-          style={chipStyles}
-          label={this.formatCount()}
-          color="error"
-        ></Chip>
-        <Button
-          variant="contained"
-          color="success"
-          type="button"
-        >
+        <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
+        <Button variant="contained" color="success" type="button">
           Increment
         </Button>
       </>
     );
+  }
+
+  private chipData() {
+    const chipText = this.formatCount();
+    const chipColor = (this.state.count > 0 ? "primary" : "error") as
+      | "primary"
+      | "error";
+    return { chipText, chipColor };
   }
 
   formatCount() {

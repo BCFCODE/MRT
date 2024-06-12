@@ -17,8 +17,8 @@ class Counter extends Component<ICounterProps, ICounterState> {
     tags: ["tag1", "tag2", "tag3"],
   };
 
-  handleIncrement = () => {
-    console.log(this);
+  handleIncrement = (newValue: string) => {
+    console.log(newValue);
     this.setState(({ count }) => ({
       count: count + 1,
     }));
@@ -32,7 +32,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
       <>
         <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
         <Button
-          onClick={this.handleIncrement}
+          onClick={() => this.handleIncrement("New value passed as an argument")}
           variant="contained"
           color="success"
           type="button"

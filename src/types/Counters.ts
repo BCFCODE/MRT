@@ -3,4 +3,6 @@ interface CounterProps {
   value: number;
 }
 
-export type { CounterProps };
+type CountersProps = CounterProps[]
+
+export type { CounterProps, CountersProps };

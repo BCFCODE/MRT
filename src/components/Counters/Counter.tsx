@@ -23,24 +23,38 @@ class Counter extends Component<ICounterProps, ICounterState> {
     const { chipText, chipColor } = this.chipData();
 
     return (
-      <Box>
-        <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
-        <Button
-          onClick={() => this.props.onIncrement(this.props.counter)}
-          variant="contained"
-          color="success"
-          type="button"
-        >
-          Increment
-        </Button>
-        <Button
-          sx={{ marginLeft: 1 }}
-          onClick={() => this.props.onDelete(this.props.counter.id)}
-          variant="contained"
-          color="error"
-        >
-          Delete
-        </Button>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          alignItems: "center",
+          justifyItems: 'center',
+          marginLeft: -1
+        }}
+      >
+        <Box>
+          <Chip style={chipStyles} label={chipText} color={chipColor}></Chip>
+        </Box>
+        <Box>
+          <Button
+            onClick={() => this.props.onIncrement(this.props.counter)}
+            variant="contained"
+            color="success"
+            type="button"
+          >
+            Increment
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            sx={{ marginLeft: 1 }}
+            onClick={() => this.props.onDelete(this.props.counter.id)}
+            variant="contained"
+            color="error"
+          >
+            Delete
+          </Button>
+        </Box>
       </Box>
     );
   }
@@ -48,7 +62,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
   private chipData() {
     const { value: count } = this.props.counter;
     const chipText = this.formatCount();
-    const chipColor = (count > 0 ? "primary" : "error") as "primary" | "error";
+    const chipColor = (count > 0 ? "primary" : "warning") as "primary" | "warning";
     return { chipText, chipColor };
   }
 
@@ -58,4 +72,4 @@ class Counter extends Component<ICounterProps, ICounterState> {
   }
 }
 
-export { Counter as Counter };
+export { Counter  };

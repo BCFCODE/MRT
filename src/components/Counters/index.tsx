@@ -1,60 +1,28 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Counter } from "./Counter";
-import { Button } from "@mui/material";
-import { CounterProps } from "../../types/Counters";
+import { CounterProps, CountersProps } from "../../types/Counters";
+import { Box } from "@mui/material";
 
-export interface ICountersProps {}
-export interface ICountersState {
-  counters: CounterProps[];
+export interface ICountersProps {
+  counters: CountersProps;
+  onIncrement: (counter: CounterProps) => void;
+  onDelete: (counter: CounterProps) => void;
 }
+export interface ICountersState {}
 
 class Counters extends Component<ICountersProps, ICountersState> {
-  state = {
-    counters: [
-      { id: 1, value: 4 },
-      { id: 2, value: 0 },
-      { id: 3, value: 0 },
-      { id: 4, value: 0 },
-    ],
-  };
-
-  handleIncrement = (counter: CounterProps) => {
-    const { id: counterId, value: counterValue } = counter;
-    this.setState(({ counters }) => ({
-      counters: counters.map(({ id, value }) =>
-        id === counterId ? { id, value: counterValue + 1 } : { id, value }
-      ),
-    }));
-  };
-
-  handleReset = () => {
-    this.setState(({ counters }) => ({
-      counters: counters.map(({ value }) => ({ id: 0, value })),
-    }));
-  };
-
-  handleDelete = (counterId: number) => {
-    this.setState(({ counters }) => ({
-      counters: counters.filter((counter) => counter.id !== counterId),
-    }));
-  };
-
   render() {
-    const { counters } = this.state;
     return (
-      <>
-        <Button color="primary" variant="outlined">
-          Reset
-        </Button>
-        {counters.map((counter) => (
+      <Box>
+        {this.props.counters.map((counter) => (
           <Counter
-            onIncrement={this.handleIncrement}
-            onDelete={this.handleDelete}
+            onIncrement={() => this.props.onIncrement(counter)}
+            onDelete={() => this.props.onDelete(counter)}
             key={counter.id}
             counter={counter}
           />
         ))}
-      </>
+      </Box>
     );
   }
 }

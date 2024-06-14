@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Counter } from "./Counter";
+import { Typography } from "@mui/material";
 
 export interface ICountersProps {}
 export interface ICountersState {
@@ -16,12 +17,22 @@ class Counters extends Component<ICountersProps, ICountersState> {
     ],
   };
 
+  handleDelete = (counterId: number) => {
+    this.setState(({ counters }) => ({
+      counters: counters.filter((counter) => counter.id !== counterId),
+    }));
+  };
+
   render() {
     const { counters } = this.state;
     return (
       <>
         {counters.map((counter) => (
-          <Counter key={counter.id} value={counter.value} />
+          <Counter
+            onDelete={this.handleDelete}
+            key={counter.id}
+            counter={counter}
+          />
         ))}
       </>
     );

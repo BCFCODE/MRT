@@ -3,8 +3,10 @@ import { Box, Button, Chip } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 
 export interface ICounterProps {
-  value: number;
+  counter: { id: number; value: number };
   selected?: boolean;
+  children?: React.ReactNode;
+  onDelete: (counterId: number) => void;
 }
 export interface ICounterState {
   value: number;
@@ -16,7 +18,7 @@ const chipStyles: CSSProperties = {
 };
 class Counter extends Component<ICounterProps, ICounterState> {
   state = {
-    value: this.props.value,
+    value: this.props.counter.value,
     tags: ["tag1", "tag2", "tag3"],
   };
 
@@ -40,6 +42,13 @@ class Counter extends Component<ICounterProps, ICounterState> {
         >
           Increment
         </Button>
+        <Button
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+          variant="contained"
+          color="error"
+        >
+          Delete
+        </Button>
       </Box>
     );
   }
@@ -57,4 +66,4 @@ class Counter extends Component<ICounterProps, ICounterState> {
   }
 }
 
-export { Counter };
+export { Counter as Counter };

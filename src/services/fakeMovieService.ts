@@ -9,6 +9,7 @@ const movies: Movie[] = [
     numberInStock: 6,
     dailyRentalRate: 2.5,
     publishDate: "2018-01-03T19:04:28.809Z",
+    liked: true
   },
   {
     _id: "5b21ca3eeb7f6fbccd471816",
@@ -44,6 +45,7 @@ const movies: Movie[] = [
     genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
     numberInStock: 7,
     dailyRentalRate: 3.5,
+    liked: true
   },
   {
     _id: "5b21ca3eeb7f6fbccd47181e",
@@ -58,6 +60,7 @@ const movies: Movie[] = [
     genre: { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" },
     numberInStock: 4,
     dailyRentalRate: 3.5,
+    liked: true
   },
   {
     _id: "5b21ca3eeb7f6fbccd471821",

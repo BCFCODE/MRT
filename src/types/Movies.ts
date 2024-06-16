@@ -10,6 +10,7 @@ interface Movie {
   numberInStock: number;
   dailyRentalRate: number;
   publishDate?: string;
+  liked?: boolean
 }
 
 export type { Genre, Movie };

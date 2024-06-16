@@ -7,17 +7,20 @@ export interface ICountersProps {
   counters: CountersProps;
   onIncrement: (counter: CounterProps) => void;
   onDelete: (counter: CounterProps) => void;
+  onDecrement: (counter: CounterProps) => void;
 }
 export interface ICountersState {}
 
 class Counters extends Component<ICountersProps, ICountersState> {
   render() {
+    const { counters, onIncrement, onDecrement, onDelete } = this.props;
     return (
       <Box>
-        {this.props.counters.map((counter) => (
+        {counters.map((counter) => (
           <Counter
-            onIncrement={() => this.props.onIncrement(counter)}
-            onDelete={() => this.props.onDelete(counter)}
+            onIncrement={() => onIncrement(counter)}
+            onDecrement={() => onDecrement(counter)}
+            onDelete={() => onDelete(counter)}
             key={counter.id}
             counter={counter}
           />

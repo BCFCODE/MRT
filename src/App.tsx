@@ -35,6 +35,15 @@ class App extends Component<IAppProps, IAppState> {
     }));
   };
 
+  handleDecrement = (counter: CounterProps) => {
+    const { id: counterId, value: counterValue } = counter;
+    this.setState(({ counters }) => ({
+      counters: counters.map(({ id, value }) =>
+        id === counterId ? { id, value: counterValue - 1 } : { id, value }
+      ),
+    }));
+  };
+
   handleDelete = (counter: CounterProps) => {
     this.setState(({ counters }) => ({
       counters: counters.filter(({ id }) => id !== counter.id),
@@ -54,6 +63,7 @@ class App extends Component<IAppProps, IAppState> {
         <Counters
           counters={this.state.counters}
           onIncrement={this.handleIncrement}
+          onDecrement={this.handleDecrement}
           onDelete={this.handleDelete}
         />
       </Box>

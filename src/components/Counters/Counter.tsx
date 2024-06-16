@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import { Box, Button, Chip } from "@mui/material";
 import { CSSProperties } from "@mui/material/styles/createMixins";
 import { CounterProps } from "../../types/Counters";
+import ClearIcon from "@mui/icons-material/Clear";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 export interface ICounterProps {
   counter: CounterProps;
   selected?: boolean;
   children?: React.ReactNode;
-  onDelete: (counterId: number) => void;
   onIncrement: (counter: CounterProps) => void;
+  onDecrement: (counter: CounterProps) => void;
+  onDelete: (counterId: number) => void;
 }
-export interface ICounterState {
-  value: number;
-}
+export interface ICounterState {}
 
 const chipStyles: CSSProperties = {
   margin: 10,
@@ -21,13 +23,13 @@ const chipStyles: CSSProperties = {
 class Counter extends Component<ICounterProps, ICounterState> {
   render() {
     const { chipText, chipColor } = this.chipData();
-    const { counter, onDelete, onIncrement } = this.props;
+    const { counter, onDelete, onDecrement, onIncrement } = this.props;
 
     return (
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr",
           alignItems: "center",
           justifyItems: "center",
           marginLeft: -1,
@@ -43,7 +45,18 @@ class Counter extends Component<ICounterProps, ICounterState> {
             color="success"
             type="button"
           >
-            Increment
+            <AddIcon />
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            sx={{ marginLeft: 1 }}
+            onClick={() => onDecrement(counter)}
+            variant="contained"
+            color="warning"
+            disabled={!counter.value}
+          >
+            <RemoveIcon />
           </Button>
         </Box>
         <Box>
@@ -53,7 +66,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
             variant="contained"
             color="error"
           >
-            Delete
+            <ClearIcon />
           </Button>
         </Box>
       </Box>

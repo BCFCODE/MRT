@@ -21,6 +21,7 @@ const chipStyles: CSSProperties = {
 class Counter extends Component<ICounterProps, ICounterState> {
   render() {
     const { chipText, chipColor } = this.chipData();
+    const { counter, onDelete, onIncrement } = this.props;
 
     return (
       <Box
@@ -28,8 +29,8 @@ class Counter extends Component<ICounterProps, ICounterState> {
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
           alignItems: "center",
-          justifyItems: 'center',
-          marginLeft: -1
+          justifyItems: "center",
+          marginLeft: -1,
         }}
       >
         <Box>
@@ -37,7 +38,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
         </Box>
         <Box>
           <Button
-            onClick={() => this.props.onIncrement(this.props.counter)}
+            onClick={() => onIncrement(counter)}
             variant="contained"
             color="success"
             type="button"
@@ -48,7 +49,7 @@ class Counter extends Component<ICounterProps, ICounterState> {
         <Box>
           <Button
             sx={{ marginLeft: 1 }}
-            onClick={() => this.props.onDelete(this.props.counter.id)}
+            onClick={() => onDelete(counter.id)}
             variant="contained"
             color="error"
           >
@@ -62,7 +63,9 @@ class Counter extends Component<ICounterProps, ICounterState> {
   private chipData() {
     const { value: count } = this.props.counter;
     const chipText = this.formatCount();
-    const chipColor = (count > 0 ? "primary" : "warning") as "primary" | "warning";
+    const chipColor = (count > 0 ? "primary" : "warning") as
+      | "primary"
+      | "warning";
     return { chipText, chipColor };
   }
 
@@ -72,4 +75,4 @@ class Counter extends Component<ICounterProps, ICounterState> {
   }
 }
 
-export { Counter  };
+export { Counter };

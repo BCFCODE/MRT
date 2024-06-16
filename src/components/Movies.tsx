@@ -9,16 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Typography } from "@mui/material";
 import { Movie } from "../types/Movies";
-
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
+import { Like } from "./common/Like";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -33,6 +24,18 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   handleDelete = (id: string) => {
     this.setState(({ movies }) => ({
       movies: movies.filter((movie) => movie._id !== id),
+    }));
+  };
+
+  handleToggleLike = (currentMovie: Movie) => {
+    const isCurrentMovieLiked = Boolean(currentMovie.liked);
+    console.log(currentMovie._id);
+    this.setState(({ movies }) => ({
+      movies: movies.map((movie) =>
+        movie._id === currentMovie._id
+          ? { ...movie, liked: !isCurrentMovieLiked }
+          : movie
+      ),
     }));
   };
 
@@ -77,6 +80,12 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
                     <TableCell align="right">{movie.genre.name}</TableCell>
                     <TableCell align="right">{movie.numberInStock}</TableCell>
                     <TableCell align="right">{movie.dailyRentalRate}</TableCell>
+                    <TableCell align="right">
+                      <Like
+                        toggleLike={() => this.handleToggleLike(movie)}
+                        isLiked={movie.liked ?? false}
+                      />
+                    </TableCell>
                     <TableCell align="right">
                       <Button
                         onClick={() => this.handleDelete(movie._id)}

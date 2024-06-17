@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { deleteMovie, getMovies } from "../services/fakeMovieService";
+import { getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";

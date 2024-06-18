@@ -13,13 +13,15 @@ import MoviesPagination from "./MovieTable/Pagination";
 export interface IMoviesProps {}
 export interface IMoviesState {
   movies: Movie[];
-  page: number;
+  numberOfCurrentPage: number;
+  numberOfItemsOnEachPage: number;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
     movies: getMovies(),
-    page: 1,
+    numberOfCurrentPage: 1,
+    numberOfItemsOnEachPage: 4,
   };
 
   handleDelete = (id: string) => {
@@ -41,13 +43,14 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   };
 
   handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    this.setState(() => ({ page: value }));
+    this.setState(() => ({ numberOfCurrentPage: value }));
     console.log(event, value);
   };
 
   render() {
-    const { movies, page } = this.state;
+    const { movies, numberOfCurrentPage, numberOfItemsOnEachPage } = this.state;
     const isAnyMovieInDB = movies.length;
+    const pageCount = Math.ceil(isAnyMovieInDB / numberOfItemsOnEachPage);
 
     return (
       <>
@@ -64,6 +67,8 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             <Table sx={{ minWidth: "auto" }} aria-label="simple table">
               <MoviesTableHead />
               <MoviesTableBody
+                numberOfCurrentPage={numberOfCurrentPage}
+                numberOfItemsOnEachPage={numberOfItemsOnEachPage}
                 movies={movies}
                 onDelete={(id) => this.handleDelete(id)}
                 onLike={(movie) => this.handleToggleLike(movie)}
@@ -71,12 +76,16 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             </Table>
           </TableContainer>
         ) : null}
-        <Stack spacing={2}>
-          <Typography>Page: {page}</Typography>
+        <Stack
+          marginTop={2}
+          alignItems="center"
+          justifyContent="center"
+          spacing={2}
+        >
           <MoviesPagination
-            pageNumber={page}
+            pageNumber={numberOfCurrentPage}
             onPageChange={this.handlePageChange}
-            pageCount={10}
+            pageCount={pageCount}
           />
         </Stack>
       </>

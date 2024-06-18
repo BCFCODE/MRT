@@ -6,15 +6,27 @@ import { Like } from "../common/Like";
 import { Movie } from "../../types/Movies";
 
 interface Props {
+  numberOfItemsOnEachPage: number;
+  numberOfCurrentPage: number;
   onLike: (currentMovie: Movie) => void;
   onDelete: (id: string) => void;
   movies: Movie[];
 }
 
-const MoviesTableBody = ({ movies, onDelete, onLike }: Props) => {
+const MoviesTableBody = ({
+  movies,
+  onDelete,
+  onLike,
+  numberOfItemsOnEachPage,
+  numberOfCurrentPage
+}: Props) => {
+  const endOfPage =  numberOfCurrentPage * numberOfItemsOnEachPage
+  const startOfPage = endOfPage - numberOfItemsOnEachPage
+  const moviesChunk = movies.slice(startOfPage, endOfPage)
+  
   return (
     <TableBody>
-      {movies.map((movie) => (
+      {moviesChunk.map((movie) => (
         <TableRow
           key={movie._id}
           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

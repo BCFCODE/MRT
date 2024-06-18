@@ -8,7 +8,7 @@ import { Movie } from "../types/Movies";
 import MoviesTableHead from "./MovieTable/TableHead";
 import MoviesTableBody from "./MovieTable/TableBody";
 import Stack from "@mui/material/Stack";
-import MoviesPagination from "./MovieTable/Pagination";
+import TablePagination from "./common/Pagination";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -22,6 +22,10 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     movies: getMovies(),
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
+    // pageQuery: {
+    //   current: 1,
+    //   pageSize: 4
+    // }
   };
 
   handleDelete = (id: string) => {
@@ -44,25 +48,22 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     this.setState(() => ({ numberOfCurrentPage: value }));
-    console.log(event, value);
+    // console.log(event, value);
   };
 
   render() {
     const { movies, numberOfCurrentPage, numberOfItemsOnEachPage } = this.state;
-    const isAnyMovieInDB = movies.length;
-    const pageCount = Math.ceil(isAnyMovieInDB / numberOfItemsOnEachPage);
-
-    return (
-      <>
-        {isAnyMovieInDB ? (
+    const numberOfMoviesInDB = movies.length;
+    const pageCount = Math.ceil(numberOfMoviesInDB / numberOfItemsOnEachPage);
+console.log(pageCount)
+    if (numberOfMoviesInDB < 1)
+      return <Typography>There are no movies in the database.</Typography>;
+    else
+      return (
+        <>
           <Typography>
             Showing {movies.length} movies in the database.
           </Typography>
-        ) : (
-          <Typography>There are no movies in the database.</Typography>
-        )}
-
-        {isAnyMovieInDB ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: "auto" }} aria-label="simple table">
               <MoviesTableHead />
@@ -75,21 +76,20 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               />
             </Table>
           </TableContainer>
-        ) : null}
-        <Stack
-          marginTop={2}
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-        >
-          <MoviesPagination
-            pageNumber={numberOfCurrentPage}
-            onPageChange={this.handlePageChange}
-            pageCount={pageCount}
-          />
-        </Stack>
-      </>
-    );
+          <Stack
+            marginTop={2}
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
+          >
+            <TablePagination
+              pageCount={pageCount}
+              pageNumber={numberOfCurrentPage}
+              onPageChange={this.handlePageChange}
+            />
+          </Stack>
+        </>
+      );
   }
 }
 

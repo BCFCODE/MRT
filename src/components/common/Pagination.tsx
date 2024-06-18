@@ -6,7 +6,7 @@ interface Props {
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const MoviesPagination = ({ pageNumber, onPageChange, pageCount }: Props) => {
+const TablePagination = ({ pageNumber, onPageChange, pageCount }: Props) => {
   return (
     <Pagination
       page={pageNumber}
@@ -17,4 +17,4 @@ const MoviesPagination = ({ pageNumber, onPageChange, pageCount }: Props) => {
   );
 };
 
-export default MoviesPagination;
+export default TablePagination;

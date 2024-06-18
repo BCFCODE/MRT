@@ -23,6 +23,8 @@ const MoviesTableBody = ({
   const endOfPage =  numberOfCurrentPage * numberOfItemsOnEachPage
   const startOfPage = endOfPage - numberOfItemsOnEachPage
   const moviesChunk = movies.slice(startOfPage, endOfPage)
+  const isPageEmpty = movies.length === startOfPage
+  console.log('isPageEmpty?', isPageEmpty)
   
   return (
     <TableBody>

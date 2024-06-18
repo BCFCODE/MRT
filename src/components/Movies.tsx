@@ -1,15 +1,13 @@
 import { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Button, Typography } from "@mui/material";
 import { Movie } from "../types/Movies";
-import { Like } from "./common/Like";
+import MoviesPagination from "./Pagination";
+import MoviesTableHead from "./MovieTable/TableHead";
+import MoviesTableBody from "./MovieTable/TableBody";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -56,51 +54,16 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
         {isAnyMovieInDB ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: "auto" }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  {["Title", "Genre", "Stock", "Rate", ""].map((header, i) => (
-                    <TableCell
-                      sx={{ fontWeight: "bold" }}
-                      align={i ? "right" : "left"}
-                    >
-                      {header}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {movies.map((movie) => (
-                  <TableRow
-                    key={movie._id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {movie.title}
-                    </TableCell>
-                    <TableCell align="right">{movie.genre.name}</TableCell>
-                    <TableCell align="right">{movie.numberInStock}</TableCell>
-                    <TableCell align="right">{movie.dailyRentalRate}</TableCell>
-                    <TableCell align="right">
-                      <Like
-                        toggleLike={() => this.handleToggleLike(movie)}
-                        isLiked={movie.liked ?? false}
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      <Button
-                        onClick={() => this.handleDelete(movie._id)}
-                        color="error"
-                        variant="contained"
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+              <MoviesTableHead />
+              <MoviesTableBody
+                movies={movies}
+                onDelete={(id) => this.handleDelete(id)}
+                onLike={(movie) => this.handleToggleLike(movie)}
+              />
             </Table>
           </TableContainer>
         ) : null}
+        <MoviesPagination />
       </>
     );
   }

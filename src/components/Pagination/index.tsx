@@ -14,6 +14,7 @@ export default function MoviesPagination() {
     <Stack spacing={2}>
       <Typography>Page: {page}</Typography>
       <Pagination
+      
         page={page}
         onChange={handleChange}
         count={10}

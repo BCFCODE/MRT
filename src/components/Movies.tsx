@@ -4,7 +4,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Movie } from "../types/Movies";
+import { Movie, PageQuery } from "../types/Movies";
 import MoviesTableHead from "./MovieTable/TableHead";
 import MoviesTableBody from "./MovieTable/TableBody";
 import Stack from "@mui/material/Stack";
@@ -15,6 +15,7 @@ export interface IMoviesState {
   movies: Movie[];
   numberOfCurrentPage: number;
   numberOfItemsOnEachPage: number;
+  pageQuery: PageQuery;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
@@ -22,10 +23,10 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     movies: getMovies(),
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
-    // pageQuery: {
-    //   current: 1,
-    //   pageSize: 4
-    // }
+    pageQuery: {
+      current: 1,
+      pageSize: 4,
+    },
   };
 
   handleDelete = (movie: Movie) => {
@@ -48,16 +49,16 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   };
 
   handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    this.setState(() => ({ numberOfCurrentPage: value }));
-    // console.log(event, value);
+    const newState = { ...this.state };
+    newState.pageQuery.current = value;
+    this.setState(() => newState);
   };
 
   render() {
-    const { movies, numberOfCurrentPage, numberOfItemsOnEachPage } = this.state;
-    const numberOfMoviesInDB = movies.length;
-    const pageCount = Math.ceil(numberOfMoviesInDB / numberOfItemsOnEachPage);
-    console.log(pageCount);
-    if (numberOfMoviesInDB < 1)
+    const { movies, pageQuery } = this.state;
+    const isNotAnyMovieInDB = !movies.length;
+
+    if (isNotAnyMovieInDB)
       return <Typography>There are no movies in the database.</Typography>;
     else
       return (
@@ -69,8 +70,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             <Table sx={{ minWidth: "auto" }} aria-label="simple table">
               <MoviesTableHead />
               <MoviesTableBody
-                numberOfCurrentPage={numberOfCurrentPage}
-                numberOfItemsOnEachPage={numberOfItemsOnEachPage}
+                pageQuery={pageQuery}
                 movies={movies}
                 onDelete={(movie) => this.handleDelete(movie)}
                 onLike={(movie) => this.handleToggleLike(movie)}
@@ -83,13 +83,11 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             justifyContent="center"
             spacing={2}
           >
-            {pageCount > 1 && (
-              <TablePagination
-                pageCount={pageCount}
-                pageNumber={numberOfCurrentPage}
-                onPageChange={this.handlePageChange}
-              />
-            )}
+            <TablePagination
+              movies={movies}
+              pageQuery={pageQuery}
+              onPageChange={this.handlePageChange}
+            />
           </Stack>
         </>
       );

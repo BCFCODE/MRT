@@ -10,7 +10,12 @@ interface Movie {
   numberInStock: number;
   dailyRentalRate: number;
   publishDate?: string;
-  liked?: boolean
+  liked?: boolean;
 }
 
-export type { Genre, Movie };
+interface PageQuery {
+  current: number;
+  pageSize: number;
+}
+
+export type { Genre, Movie, PageQuery };

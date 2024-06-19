@@ -1,34 +1,28 @@
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-
-import { Movie } from "../../types/Movies";
+import { Movie, PageQuery } from "../../types/Movies";
 import TableCells from "./TableCells";
+import usePageQuery from "./hooks/usePageQuery";
 
 interface Props {
   movies: Movie[];
-  numberOfItemsOnEachPage: number;
-  numberOfCurrentPage: number;
+  pageQuery: PageQuery;
   onLike: (currentMovie: Movie) => void;
   onDelete: (currentMovie: Movie) => void;
 }
 
-const MoviesTableBody = ({
-  movies,
-  onDelete,
-  onLike,
-  numberOfItemsOnEachPage,
-  numberOfCurrentPage,
-}: Props) => {
-  const endOfPage = numberOfCurrentPage * numberOfItemsOnEachPage;
-  const startOfPage = endOfPage - numberOfItemsOnEachPage;
-  const isPageEmpty = movies.length === startOfPage;
-  console.log("isPageEmpty?", isPageEmpty);
-  const moviesChunk = movies.slice(startOfPage, endOfPage);
+const MoviesTableBody = ({ movies, onDelete, onLike, pageQuery }: Props) => {
+  const { moviesChunk, isCurrentPageEmpty, numberOfItemsInCurrentPage } =
+    usePageQuery({
+      pageQuery,
+      movies,
+    });
+
+  console.log(numberOfItemsInCurrentPage, "isPageEmpty?", isCurrentPageEmpty);
 
   return (
     <TableBody>
-      {moviesChunk.map((currentMovie) => (
+      {moviesChunk?.map((currentMovie) => (
         <TableRow
           key={currentMovie._id}
           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

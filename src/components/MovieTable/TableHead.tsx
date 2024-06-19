@@ -7,7 +7,11 @@ const MoviesTableHead = () => {
     <TableHead>
       <TableRow>
         {["Title", "Genre", "Stock", "Rate", ""].map((header, i) => (
-          <TableCell sx={{ fontWeight: "bold" }} align={i ? "right" : "left"}>
+          <TableCell
+            key={i}
+            sx={{ fontWeight: "bold" }}
+            align={i ? "right" : "left"}
+          >
             {header}
           </TableCell>
         ))}

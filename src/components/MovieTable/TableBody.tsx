@@ -1,16 +1,16 @@
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Button } from "@mui/material";
-import { Like } from "../common/Like";
+
 import { Movie } from "../../types/Movies";
+import TableCells from "./TableCells";
 
 interface Props {
+  movies: Movie[];
   numberOfItemsOnEachPage: number;
   numberOfCurrentPage: number;
   onLike: (currentMovie: Movie) => void;
-  onDelete: (id: string) => void;
-  movies: Movie[];
+  onDelete: (currentMovie: Movie) => void;
 }
 
 const MoviesTableBody = ({
@@ -18,42 +18,26 @@ const MoviesTableBody = ({
   onDelete,
   onLike,
   numberOfItemsOnEachPage,
-  numberOfCurrentPage
+  numberOfCurrentPage,
 }: Props) => {
-  const endOfPage =  numberOfCurrentPage * numberOfItemsOnEachPage
-  const startOfPage = endOfPage - numberOfItemsOnEachPage
-  const moviesChunk = movies.slice(startOfPage, endOfPage)
-  const isPageEmpty = movies.length === startOfPage
-  console.log('isPageEmpty?', isPageEmpty)
-  
+  const endOfPage = numberOfCurrentPage * numberOfItemsOnEachPage;
+  const startOfPage = endOfPage - numberOfItemsOnEachPage;
+  const isPageEmpty = movies.length === startOfPage;
+  console.log("isPageEmpty?", isPageEmpty);
+  const moviesChunk = movies.slice(startOfPage, endOfPage);
+
   return (
     <TableBody>
-      {moviesChunk.map((movie) => (
+      {moviesChunk.map((currentMovie) => (
         <TableRow
-          key={movie._id}
+          key={currentMovie._id}
           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
         >
-          <TableCell component="th" scope="row">
-            {movie.title}
-          </TableCell>
-          <TableCell align="right">{movie.genre.name}</TableCell>
-          <TableCell align="right">{movie.numberInStock}</TableCell>
-          <TableCell align="right">{movie.dailyRentalRate}</TableCell>
-          <TableCell align="right">
-            <Like
-              toggleLike={() => onLike(movie)}
-              isLiked={movie.liked ?? false}
-            />
-          </TableCell>
-          <TableCell align="right">
-            <Button
-              onClick={() => onDelete(movie._id)}
-              color="error"
-              variant="contained"
-            >
-              Delete
-            </Button>
-          </TableCell>
+          <TableCells
+            onLike={() => onLike(currentMovie)}
+            onDelete={() => onDelete(currentMovie)}
+            movie={currentMovie}
+          />
         </TableRow>
       ))}
     </TableBody>

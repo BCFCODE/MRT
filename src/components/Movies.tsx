@@ -28,9 +28,10 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     // }
   };
 
-  handleDelete = (id: string) => {
+  handleDelete = (movie: Movie) => {
+    const { _id: currentMovie_id } = movie;
     this.setState(({ movies }) => ({
-      movies: movies.filter((movie) => movie._id !== id),
+      movies: movies.filter((movie) => movie._id !== currentMovie_id),
     }));
   };
 
@@ -55,7 +56,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     const { movies, numberOfCurrentPage, numberOfItemsOnEachPage } = this.state;
     const numberOfMoviesInDB = movies.length;
     const pageCount = Math.ceil(numberOfMoviesInDB / numberOfItemsOnEachPage);
-console.log(pageCount)
+    console.log(pageCount);
     if (numberOfMoviesInDB < 1)
       return <Typography>There are no movies in the database.</Typography>;
     else
@@ -71,7 +72,7 @@ console.log(pageCount)
                 numberOfCurrentPage={numberOfCurrentPage}
                 numberOfItemsOnEachPage={numberOfItemsOnEachPage}
                 movies={movies}
-                onDelete={(id) => this.handleDelete(id)}
+                onDelete={(movie) => this.handleDelete(movie)}
                 onLike={(movie) => this.handleToggleLike(movie)}
               />
             </Table>

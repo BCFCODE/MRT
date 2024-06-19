@@ -83,11 +83,13 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             justifyContent="center"
             spacing={2}
           >
-            <TablePagination
-              pageCount={pageCount}
-              pageNumber={numberOfCurrentPage}
-              onPageChange={this.handlePageChange}
-            />
+            {pageCount > 1 && (
+              <TablePagination
+                pageCount={pageCount}
+                pageNumber={numberOfCurrentPage}
+                onPageChange={this.handlePageChange}
+              />
+            )}
           </Stack>
         </>
       );

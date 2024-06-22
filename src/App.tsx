@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import "./App.css";
 import { Movies } from "./components/Movies";
-import GenreList from "./components/GenreList";
+import { GenreList } from "./components/GenreList";
 
 function App() {
   return (

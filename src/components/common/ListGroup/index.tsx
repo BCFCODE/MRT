@@ -13,17 +13,17 @@ import { Genre } from "../../../types/Movies";
 export interface IListGroupProps {}
 export interface IListGroupState {
   genres: Genre[];
-  selectedGenre: string;
+  selectedGenre: Genre;
 }
 
 class ListGroup extends Component<IListGroupProps, IListGroupState> {
   state = {
     genres: getGenres(),
-    selectedGenre: "",
+    selectedGenre: {} as Genre,
   };
 
   handleClick = (genre: Genre) => {
-    this.setState(() => ({ selectedGenre: genre._id }));
+    this.setState(() => ({ selectedGenre: genre }));
     console.log(genre, "Clicked!");
   };
 
@@ -52,8 +52,8 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
                 <ListItemButton
                   sx={{
                     bgcolor:
-                      selectedGenre === genre._id
-                        ? "ButtonHighlight"
+                      selectedGenre._id === genre._id
+                        ? "ButtonShadow"
                         : "initial",
                   }}
                   component="a"

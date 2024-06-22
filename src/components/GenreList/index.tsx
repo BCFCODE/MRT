@@ -8,13 +8,20 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import { getGenres } from "../../services/fakeGenreService";
+import { Genre } from "../../types/Movies";
 
 export interface IGenreListProps {}
-export interface IGenreListState {}
+export interface IGenreListState {
+  genres: Genre[];
+}
 
 class GenreList extends Component<IGenreListProps, IGenreListState> {
   state = {
     genres: getGenres(),
+  };
+
+  handleClick = (genre: Genre) => {
+    console.log(genre, "Clicked!");
   };
 
   render() {
@@ -37,10 +44,13 @@ class GenreList extends Component<IGenreListProps, IGenreListState> {
         <Divider />
         <nav aria-label="secondary mailbox folders">
           <List>
-            {genres.map(({ _id, name }) => (
-              <ListItem key={_id} disablePadding>
+            {genres.map((genre) => (
+              <ListItem key={genre._id} disablePadding>
                 <ListItemButton component="a" href="#">
-                  <ListItemText primary={name} />
+                  <ListItemText
+                    onClick={() => this.handleClick(genre)}
+                    primary={genre.name}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}

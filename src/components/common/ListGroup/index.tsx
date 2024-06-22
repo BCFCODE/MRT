@@ -7,25 +7,28 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChecklistIcon from "@mui/icons-material/Checklist";
-import { getGenres } from "../../services/fakeGenreService";
-import { Genre } from "../../types/Movies";
+import { getGenres } from "../../../services/fakeGenreService";
+import { Genre } from "../../../types/Movies";
 
-export interface IGenreListProps {}
-export interface IGenreListState {
+export interface IListGroupProps {}
+export interface IListGroupState {
   genres: Genre[];
+  selectedGenre: string;
 }
 
-class GenreList extends Component<IGenreListProps, IGenreListState> {
+class ListGroup extends Component<IListGroupProps, IListGroupState> {
   state = {
     genres: getGenres(),
+    selectedGenre: "",
   };
 
   handleClick = (genre: Genre) => {
+    this.setState(() => ({ selectedGenre: genre._id }));
     console.log(genre, "Clicked!");
   };
 
   render() {
-    const { genres } = this.state;
+    const { genres, selectedGenre } = this.state;
 
     return (
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -46,7 +49,16 @@ class GenreList extends Component<IGenreListProps, IGenreListState> {
           <List>
             {genres.map((genre) => (
               <ListItem key={genre._id} disablePadding>
-                <ListItemButton component="a" href="#">
+                <ListItemButton
+                  sx={{
+                    bgcolor:
+                      selectedGenre === genre._id
+                        ? "ButtonHighlight"
+                        : "initial",
+                  }}
+                  component="a"
+                  href="#"
+                >
                   <ListItemText
                     onClick={() => this.handleClick(genre)}
                     primary={genre.name}
@@ -61,4 +73,4 @@ class GenreList extends Component<IGenreListProps, IGenreListState> {
   }
 }
 
-export { GenreList };
+export { ListGroup };

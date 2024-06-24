@@ -10,7 +10,9 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import { getGenres } from "../../../services/fakeGenreService";
 import { Genre } from "../../../types/Movies";
 
-export interface IListGroupProps {}
+export interface IListGroupProps {
+  onSelectGenre: (genre: Genre) => void
+}
 export interface IListGroupState {
   genres: Genre[];
   selectedGenre: Genre;
@@ -29,6 +31,7 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
 
   render() {
     const { genres, selectedGenre } = this.state;
+    const {onSelectGenre} = this.props
 
     return (
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -50,7 +53,7 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
             {genres.map((genre) => (
               <ListItem key={genre._id} disablePadding>
                 <ListItemButton
-                  onClick={() => this.handleClick(genre)}
+                  onClick={() => onSelectGenre(genre)}
                   sx={{
                     bgcolor:
                       selectedGenre._id === genre._id

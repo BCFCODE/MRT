@@ -2,13 +2,14 @@ import { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Movie, PageQuery } from "../types/Movies";
 import MoviesTableHead from "./MovieTable/TableHead";
 import MoviesTableBody from "./MovieTable/TableBody";
 import Stack from "@mui/material/Stack";
 import TablePagination from "./common/Pagination";
+import { ListGroup } from "./common/ListGroup";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -62,34 +63,39 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
       return <Typography>There are no movies in the database.</Typography>;
     else
       return (
-        <>
-          <Typography>
-            Showing {movies.length} movies in the database.
-          </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: "auto" }} aria-label="simple table">
-              <MoviesTableHead />
-              <MoviesTableBody
-                pageQuery={pageQuery}
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <ListGroup />
+          </Grid>
+          <Grid item xs={8}>
+            <Typography>
+              Showing {movies.length} movies in the database.
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: "auto" }} aria-label="simple table">
+                <MoviesTableHead />
+                <MoviesTableBody
+                  pageQuery={pageQuery}
+                  movies={movies}
+                  onDelete={(movie) => this.handleDelete(movie)}
+                  onLike={(movie) => this.handleToggleLike(movie)}
+                />
+              </Table>
+            </TableContainer>
+            <Stack
+              marginTop={2}
+              alignItems="center"
+              justifyContent="center"
+              spacing={2}
+            >
+              <TablePagination
                 movies={movies}
-                onDelete={(movie) => this.handleDelete(movie)}
-                onLike={(movie) => this.handleToggleLike(movie)}
+                pageQuery={pageQuery}
+                onPageChange={this.handlePageChange}
               />
-            </Table>
-          </TableContainer>
-          <Stack
-            marginTop={2}
-            alignItems="center"
-            justifyContent="center"
-            spacing={2}
-          >
-            <TablePagination
-              movies={movies}
-              pageQuery={pageQuery}
-              onPageChange={this.handlePageChange}
-            />
-          </Stack>
-        </>
+            </Stack>
+          </Grid>
+        </Grid>
       );
   }
 }

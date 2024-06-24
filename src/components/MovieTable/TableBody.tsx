@@ -1,6 +1,6 @@
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import { Movie, PageQuery } from "../../types/Movies";
+import { Genre, Movie, PageQuery } from "../../types/Movies";
 import TableCells from "./TableCells";
 import usePageQuery from "./hooks/usePageQuery";
 
@@ -9,11 +9,19 @@ interface Props {
   pageQuery: PageQuery;
   onLike: (currentMovie: Movie) => void;
   onDelete: (currentMovie: Movie) => void;
+  selectedGenre: Genre | null;
 }
 
-const MoviesTableBody = ({ movies, onDelete, onLike, pageQuery }: Props) => {
+const MoviesTableBody = ({
+  movies,
+  onDelete,
+  onLike,
+  pageQuery,
+  selectedGenre,
+}: Props) => {
   const { moviesChunk, isCurrentPageEmpty, numberOfItemsInCurrentPage } =
     usePageQuery({
+      selectedGenre,
       pageQuery,
       movies,
     });

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, ErrorInfo } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -32,6 +32,33 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     selectedGenre: null,
   };
 
+  componentDidMount(): void {
+    console.log(this.state, "didMount");
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<IMoviesProps>,
+    prevState: Readonly<IMoviesState>,
+    snapshot?: any
+  ): void {
+    console.log(prevProps, prevState.movies, "didUpdate");
+    // this.setState({...this.state, movies: prevState.movies})
+  }
+
+  shouldComponentUpdate(
+    nextProps: Readonly<IMoviesProps>,
+    nextState: Readonly<IMoviesState>,
+    nextContext: any
+  ): boolean {
+    console.log(nextProps, nextState.movies, "shouldComponentUpdate");
+    // this.setState(() => nextState)
+    return nextProps || nextState ? true : false;
+  }
+
+  componentWillUnmount(): void {
+    console.log("componentWillUnmount");
+  }
+
   handleDelete = (movie: Movie) => {
     const { _id: currentMovie_id } = movie;
     this.setState(({ movies }) => ({
@@ -41,7 +68,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handleToggleLike = (currentMovie: Movie) => {
     const isCurrentMovieLiked = Boolean(currentMovie.liked);
-    console.log(currentMovie._id);
+    console.log(currentMovie._id, "current movie liked");
     this.setState(({ movies }) => ({
       movies: movies.map((movie) =>
         movie._id === currentMovie._id
@@ -57,9 +84,11 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     this.setState(() => newState);
   };
 
-  handleSelectGenre = (genre: Genre) => {
-    this.setState(() => ({ ...this.setState, selectedGenre: genre }));
-    console.log(genre, "genre selected!");
+  handleSelectedGenre = (genre: Genre) => {
+    this.setState(() => ({
+      ...this.setState,
+      selectedGenre: genre,
+    }));
   };
 
   render() {
@@ -74,7 +103,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
           <Grid item xs={4}>
             <ListGroup
               selectedGenre={selectedGenre}
-              onSelectGenre={(genre) => this.handleSelectGenre(genre)}
+              onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
             />
           </Grid>
           <Grid item xs={8}>
@@ -85,8 +114,9 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               <Table sx={{ minWidth: "auto" }} aria-label="simple table">
                 <MoviesTableHead />
                 <MoviesTableBody
-                  pageQuery={pageQuery}
                   movies={movies}
+                  selectedGenre={selectedGenre}
+                  pageQuery={pageQuery}
                   onDelete={(movie) => this.handleDelete(movie)}
                   onLike={(movie) => this.handleToggleLike(movie)}
                 />
@@ -100,6 +130,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             >
               <TablePagination
                 movies={movies}
+                selectedGenre={selectedGenre}
                 pageQuery={pageQuery}
                 onPageChange={this.handlePageChange}
               />

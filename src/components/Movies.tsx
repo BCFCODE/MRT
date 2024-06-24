@@ -25,6 +25,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
     pageQuery: {
+      selectedGenre: '',
       current: 1,
       pageSize: 4,
     },
@@ -65,7 +66,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
       return (
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <ListGroup />
+            <ListGroup onSelectGenre={(genre) => console.log('onSelectGenre Clicked!', genre)}/>
           </Grid>
           <Grid item xs={8}>
             <Typography>

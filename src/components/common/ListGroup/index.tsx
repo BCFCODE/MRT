@@ -50,6 +50,7 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
             {genres.map((genre) => (
               <ListItem key={genre._id} disablePadding>
                 <ListItemButton
+                  onClick={() => this.handleClick(genre)}
                   sx={{
                     bgcolor:
                       selectedGenre._id === genre._id
@@ -59,10 +60,7 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
                   component="a"
                   href="#"
                 >
-                  <ListItemText
-                    onClick={() => this.handleClick(genre)}
-                    primary={genre.name}
-                  />
+                  <ListItemText primary={genre.name} />
                 </ListItemButton>
               </ListItem>
             ))}

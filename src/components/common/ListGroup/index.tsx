@@ -11,27 +11,21 @@ import { getGenres } from "../../../services/fakeGenreService";
 import { Genre } from "../../../types/Movies";
 
 export interface IListGroupProps {
-  onSelectGenre: (genre: Genre) => void
+  selectedGenre: Genre | null;
+  onSelectGenre: (genre: Genre) => void;
 }
 export interface IListGroupState {
   genres: Genre[];
-  selectedGenre: Genre;
 }
 
 class ListGroup extends Component<IListGroupProps, IListGroupState> {
   state = {
     genres: getGenres(),
-    selectedGenre: {} as Genre,
-  };
-
-  handleClick = (genre: Genre) => {
-    this.setState(() => ({ selectedGenre: genre }));
-    console.log(genre, "Clicked!");
   };
 
   render() {
-    const { genres, selectedGenre } = this.state;
-    const {onSelectGenre} = this.props
+    const { genres } = this.state;
+    const { onSelectGenre, selectedGenre } = this.props;
 
     return (
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -56,7 +50,7 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
                   onClick={() => onSelectGenre(genre)}
                   sx={{
                     bgcolor:
-                      selectedGenre._id === genre._id
+                      selectedGenre?._id === genre._id
                         ? "ButtonShadow"
                         : "initial",
                   }}

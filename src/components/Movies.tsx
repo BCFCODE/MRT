@@ -4,7 +4,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Movie, PageQuery } from "../types/Movies";
+import { Genre, Movie, PageQuery } from "../types/Movies";
 import MoviesTableHead from "./MovieTable/TableHead";
 import MoviesTableBody from "./MovieTable/TableBody";
 import Stack from "@mui/material/Stack";
@@ -17,6 +17,7 @@ export interface IMoviesState {
   numberOfCurrentPage: number;
   numberOfItemsOnEachPage: number;
   pageQuery: PageQuery;
+  selectedGenre: Genre | null;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
@@ -25,10 +26,10 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
     pageQuery: {
-      selectedGenre: '',
       current: 1,
       pageSize: 4,
     },
+    selectedGenre: null,
   };
 
   handleDelete = (movie: Movie) => {
@@ -56,8 +57,13 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     this.setState(() => newState);
   };
 
+  handleSelectGenre = (genre: Genre) => {
+    this.setState(() => ({ ...this.setState, selectedGenre: genre }));
+    console.log(genre, "genre selected!");
+  };
+
   render() {
-    const { movies, pageQuery } = this.state;
+    const { movies, pageQuery, selectedGenre } = this.state;
     const isNotAnyMovieInDB = !movies.length;
 
     if (isNotAnyMovieInDB)
@@ -66,7 +72,10 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
       return (
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <ListGroup onSelectGenre={(genre) => console.log('onSelectGenre Clicked!', genre)}/>
+            <ListGroup
+              selectedGenre={selectedGenre}
+              onSelectGenre={(genre) => this.handleSelectGenre(genre)}
+            />
           </Grid>
           <Grid item xs={8}>
             <Typography>

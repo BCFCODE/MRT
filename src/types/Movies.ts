@@ -14,7 +14,6 @@ interface Movie {
 }
 
 interface PageQuery {
-  selectedGenre: string;
   current: number;
   pageSize: number;
 }

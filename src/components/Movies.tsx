@@ -21,7 +21,7 @@ export interface IMoviesState {
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
-    movies: getMovies(),
+    movies: [],
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
     pageQuery: {
@@ -33,7 +33,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   };
 
   componentDidMount(): void {
-    console.log(this.state, "didMount");
+    this.setState(() => ({ ...this.state, movies: getMovies() }));
   }
 
   handleDelete = (movie: Movie) => {

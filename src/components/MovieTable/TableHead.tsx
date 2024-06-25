@@ -18,7 +18,6 @@ class MoviesTableHead extends Component<
 
   handleHeaderClick = (header: string) => {
     this.setState(() => ({ selectedHeader: header }));
-    
   };
 
   render() {

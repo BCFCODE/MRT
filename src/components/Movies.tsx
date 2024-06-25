@@ -1,4 +1,4 @@
-import { Component, ErrorInfo } from "react";
+import { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
@@ -17,7 +17,6 @@ export interface IMoviesState {
   numberOfCurrentPage: number;
   numberOfItemsOnEachPage: number;
   pageQuery: PageQuery;
-  selectedGenre: Genre | null;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
@@ -28,35 +27,13 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     pageQuery: {
       current: 1,
       pageSize: 4,
+      orderBy: "",
+      selectedGenre: {} as Genre,
     },
-    selectedGenre: null,
   };
 
   componentDidMount(): void {
     console.log(this.state, "didMount");
-  }
-
-  componentDidUpdate(
-    prevProps: Readonly<IMoviesProps>,
-    prevState: Readonly<IMoviesState>,
-    snapshot?: any
-  ): void {
-    console.log(prevProps, prevState.movies, "didUpdate");
-    // this.setState({...this.state, movies: prevState.movies})
-  }
-
-  shouldComponentUpdate(
-    nextProps: Readonly<IMoviesProps>,
-    nextState: Readonly<IMoviesState>,
-    nextContext: any
-  ): boolean {
-    console.log(nextProps, nextState.movies, "shouldComponentUpdate");
-    // this.setState(() => nextState)
-    return nextProps || nextState ? true : false;
-  }
-
-  componentWillUnmount(): void {
-    console.log("componentWillUnmount");
   }
 
   handleDelete = (movie: Movie) => {
@@ -86,13 +63,16 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handleSelectedGenre = (genre: Genre) => {
     this.setState(() => ({
-      ...this.setState,
+      ...this.state,
       selectedGenre: genre,
     }));
+    const newState = { ...this.state };
+    newState.pageQuery.selectedGenre = genre;
+    this.setState(() => newState);
   };
 
   render() {
-    const { movies, pageQuery, selectedGenre } = this.state;
+    const { movies, pageQuery } = this.state;
     const isNotAnyMovieInDB = !movies.length;
 
     if (isNotAnyMovieInDB)
@@ -102,7 +82,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <ListGroup
-              selectedGenre={selectedGenre}
+              pageQuery={pageQuery}
               onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
             />
           </Grid>
@@ -115,7 +95,6 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
                 <MoviesTableHead />
                 <MoviesTableBody
                   movies={movies}
-                  selectedGenre={selectedGenre}
                   pageQuery={pageQuery}
                   onDelete={(movie) => this.handleDelete(movie)}
                   onLike={(movie) => this.handleToggleLike(movie)}
@@ -130,7 +109,6 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             >
               <TablePagination
                 movies={movies}
-                selectedGenre={selectedGenre}
                 pageQuery={pageQuery}
                 onPageChange={this.handlePageChange}
               />

@@ -8,10 +8,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import { getGenres } from "../../../services/fakeGenreService";
-import { Genre } from "../../../types/Movies";
+import { Genre, PageQuery } from "../../../types/Movies";
 
 export interface IListGroupProps {
-  selectedGenre: Genre | null;
+  pageQuery: PageQuery;
   onSelectGenre: (genre: Genre) => void;
 }
 export interface IListGroupState {
@@ -25,7 +25,10 @@ class ListGroup extends Component<IListGroupProps, IListGroupState> {
 
   render() {
     const { genres } = this.state;
-    const { onSelectGenre, selectedGenre } = this.props;
+    const {
+      onSelectGenre,
+      pageQuery: { selectedGenre },
+    } = this.props;
 
     return (
       <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>

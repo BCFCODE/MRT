@@ -1,19 +1,18 @@
-import { PageQuery, Movie, Genre } from "../../../types/Movies";
+import { PageQuery, Movie } from "../../../types/Movies";
 
 interface Props {
   pageQuery: PageQuery;
   movies: Movie[];
-  selectedGenre: Genre | null;
 }
 
-const usePageQuery = ({ pageQuery, movies, selectedGenre }: Props) => {
-  const { current, pageSize } = pageQuery;
+const usePageQuery = ({ pageQuery, movies }: Props) => {
+  const { current, pageSize, selectedGenre } = pageQuery;
 
-  const filteredMovies = selectedGenre
+  const filteredMovies = selectedGenre._id
     ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)
     : movies;
 
-  const numberOfMoviesInDB = selectedGenre
+  const numberOfMoviesInDB = selectedGenre._id
     ? filteredMovies.length
     : movies?.length;
 

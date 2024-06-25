@@ -17,7 +17,8 @@ interface PageQuery {
   current: number;
   pageSize: number;
   orderBy: string;
-  selectedGenre: Genre ;
+  selectedGenre: Genre;
+  genres: Genre[];
 }
 
 export type { Genre, Movie, PageQuery };

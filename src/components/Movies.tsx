@@ -10,6 +10,7 @@ import MoviesTableBody from "./MovieTable/TableBody";
 import Stack from "@mui/material/Stack";
 import TablePagination from "./common/Pagination";
 import { ListGroup } from "./common/ListGroup";
+import { getGenres } from "../services/fakeGenreService";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -21,19 +22,23 @@ export interface IMoviesState {
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
-    movies: [],
+    movies: [] as Movie[],
     numberOfCurrentPage: 1,
     numberOfItemsOnEachPage: 4,
     pageQuery: {
       current: 1,
       pageSize: 4,
       orderBy: "",
+      genres: [] as Genre[],
       selectedGenre: {} as Genre,
     },
   };
 
   componentDidMount(): void {
-    this.setState(() => ({ ...this.state, movies: getMovies() }));
+    const initialState = {...this.state}
+    initialState.movies = getMovies()
+    initialState.pageQuery.genres = getGenres()
+    this.setState(initialState);
   }
 
   handleDelete = (movie: Movie) => {

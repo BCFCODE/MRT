@@ -14,11 +14,12 @@ interface Movie {
 }
 
 interface PageQuery {
-  current: number;
+  currentPage: number;
   pageSize: number;
   orderBy: string;
   selectedGenre: Genre;
   genres: Genre[];
+  movies: Movie[];
 }
 
 export type { Genre, Movie, PageQuery };

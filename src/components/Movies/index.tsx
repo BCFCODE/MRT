@@ -1,43 +1,41 @@
 import { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies } from "../../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Genre, Movie, PageQuery } from "../types/Movies";
-import MoviesTableHead from "./MovieTable/TableHead";
-import MoviesTableBody from "./MovieTable/TableBody";
+import { Genre, Movie, PageQuery } from "../../types/Movies";
+import MoviesTableHead from "./TableHead";
+import MoviesTableBody from "./TableBody";
 import Stack from "@mui/material/Stack";
-import TablePagination from "./common/Pagination";
-import { ListGroup } from "./common/ListGroup";
-import { getGenres } from "../services/fakeGenreService";
+import TablePagination from "../common/Pagination";
+import { ListGroup } from "../common/ListGroup";
+import { getGenres } from "../../services/fakeGenreService";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
   movies: Movie[];
-  numberOfCurrentPage: number;
-  numberOfItemsOnEachPage: number;
   pageQuery: PageQuery;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
     movies: [] as Movie[],
-    numberOfCurrentPage: 1,
-    numberOfItemsOnEachPage: 4,
     pageQuery: {
-      current: 1,
+      currentPage: 1,
       pageSize: 4,
       orderBy: "",
+      movies: [] as Movie[],
       genres: [] as Genre[],
       selectedGenre: {} as Genre,
     },
   };
 
   componentDidMount(): void {
-    const initialState = {...this.state}
-    initialState.movies = getMovies()
-    initialState.pageQuery.genres = getGenres()
+    const initialState = { ...this.state };
+    initialState.movies = getMovies();
+    initialState.pageQuery.movies = getMovies();
+    initialState.pageQuery.genres = getGenres();
     this.setState(initialState);
   }
 
@@ -50,7 +48,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handleToggleLike = (currentMovie: Movie) => {
     const isCurrentMovieLiked = Boolean(currentMovie.liked);
-    console.log(currentMovie._id, "current movie liked");
+    console.log(currentMovie._id, "currentPage movie liked");
     this.setState(({ movies }) => ({
       movies: movies.map((movie) =>
         movie._id === currentMovie._id
@@ -62,7 +60,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     const newState = { ...this.state };
-    newState.pageQuery.current = value;
+    newState.pageQuery.currentPage = value;
     this.setState(() => newState);
   };
 

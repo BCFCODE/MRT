@@ -6,7 +6,7 @@ interface Props {
 }
 
 const usePageQuery = ({ pageQuery, movies }: Props) => {
-  const { current, pageSize, selectedGenre } = pageQuery;
+  const { currentPage, pageSize, selectedGenre } = pageQuery;
 
   const filteredMovies = selectedGenre._id
     ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)
@@ -17,14 +17,14 @@ const usePageQuery = ({ pageQuery, movies }: Props) => {
     : movies?.length;
 
   const pageCount = Math.ceil(numberOfMoviesInDB / pageSize);
-  const endOfPage = current * pageSize;
+  const endOfPage = currentPage * pageSize;
   const startOfPage = endOfPage - pageSize;
   const moviesChunk = filteredMovies.slice(startOfPage, endOfPage);
   const isCurrentPageEmpty = !moviesChunk.length;
   const numberOfItemsInCurrentPage = moviesChunk?.length;
 
   return {
-    current,
+    currentPage,
     pageSize,
     numberOfMoviesInDB,
     endOfPage,

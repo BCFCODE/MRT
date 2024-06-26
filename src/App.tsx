@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import "./App.css";
 import { Movies } from "./components/Movies";
-import EnhancedTable from "./components/MovieTable";
+import EnhancedTable from "./components/Movies/MovieTable";
 
 function App() {
   return (

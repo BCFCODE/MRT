@@ -1,6 +1,6 @@
 import { IMoviesState } from "..";
 
-const usePageQuery = ({
+const useMoviesState = ({
   movies,
   currentPage,
   pageSize,
@@ -36,4 +36,4 @@ const usePageQuery = ({
   };
 };
 
-export default usePageQuery;
+export default useMoviesState;

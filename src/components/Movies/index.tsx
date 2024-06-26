@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import TablePagination from "../common/Pagination";
 import { ListGroup } from "../common/ListGroup";
 import { getGenres } from "../../services/fakeGenreService";
+import DisplayMoviesCountsInDB from "./DisplayMoviesCountsInDB";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -93,6 +94,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             <Typography>
               Showing {movies.length} movies in the database.
             </Typography>
+            <DisplayMoviesCountsInDB   moviesState={this.state}/>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: "auto" }} aria-label="simple table">
                 <MoviesTableHead />

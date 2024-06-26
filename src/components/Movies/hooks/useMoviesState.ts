@@ -6,16 +6,16 @@ const useMoviesState = ({
   pageSize,
   selectedGenre,
 }: IMoviesState) => {
-
+  const numberOfMoviesInDB = movies.length
   const filteredMovies = selectedGenre._id
     ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)
     : movies;
 
-  const numberOfMoviesInDB = selectedGenre._id
+  const numberOfMoviesOnSelectedGenre = selectedGenre._id
     ? filteredMovies.length
     : movies?.length;
 
-  const pageCount = Math.ceil(numberOfMoviesInDB / pageSize);
+  const pageCount = Math.ceil(numberOfMoviesOnSelectedGenre / pageSize);
   const endOfPage = currentPage * pageSize;
   const startOfPage = endOfPage - pageSize;
   const moviesChunk = filteredMovies.slice(startOfPage, endOfPage);
@@ -25,13 +25,15 @@ const useMoviesState = ({
   return {
     currentPage,
     pageSize,
-    numberOfMoviesInDB,
     endOfPage,
     startOfPage,
     pageCount,
     moviesChunk,
     isCurrentPageEmpty,
+    numberOfMoviesInDB,
+    numberOfMoviesOnSelectedGenre,
     numberOfItemsInCurrentPage,
+    selectedGenre
     // filteredMovies,
   };
 };

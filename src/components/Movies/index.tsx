@@ -35,7 +35,6 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   componentDidMount(): void {
     const initialState = { ...this.state };
     initialState.movies = getMovies();
-    initialState.movies = getMovies();
     initialState.genres = getGenres();
     this.setState(initialState);
   }
@@ -86,7 +85,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <ListGroup
-              moviesStates={this.state}
+              moviesState={this.state}
               onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
             />
           </Grid>
@@ -98,7 +97,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               <Table sx={{ minWidth: "auto" }} aria-label="simple table">
                 <MoviesTableHead />
                 <MoviesTableBody
-                  moviesStates={this.state}
+                  moviesState={this.state}
                   onDelete={(movie) => this.handleDelete(movie)}
                   onLike={(movie) => this.handleToggleLike(movie)}
                 />
@@ -111,7 +110,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               spacing={2}
             >
               <TablePagination
-                moviesStates={this.state}
+                moviesState={this.state}
                 onPageChange={this.handlePageChange}
               />
             </Stack>

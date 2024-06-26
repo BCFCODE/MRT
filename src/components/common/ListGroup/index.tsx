@@ -10,12 +10,12 @@ import { Genre } from "../../../types/Movies";
 import { IMoviesState } from "../../Movies";
 
 interface Props {
-  moviesStates: IMoviesState;
+  moviesState: IMoviesState;
   onSelectGenre: (genre: Genre) => void;
 }
 
-const ListGroup = ({ moviesStates, onSelectGenre }: Props) => {
-  const { genres, selectedGenre } = moviesStates;
+const ListGroup = ({ moviesState, onSelectGenre }: Props) => {
+  const { genres, selectedGenre } = moviesState;
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>

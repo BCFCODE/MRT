@@ -6,14 +6,14 @@ import usePageQuery from "./hooks/usePageQuery";
 import { IMoviesState } from ".";
 
 interface Props {
-  moviesStates: IMoviesState;
+  moviesState: IMoviesState;
   onLike: (currentMovie: Movie) => void;
   onDelete: (currentMovie: Movie) => void;
 }
 
-const MoviesTableBody = ({ onDelete, onLike, moviesStates }: Props) => {
+const MoviesTableBody = ({ onDelete, onLike, moviesState }: Props) => {
   const { moviesChunk, isCurrentPageEmpty, numberOfItemsInCurrentPage } =
-    usePageQuery(moviesStates);
+    usePageQuery(moviesState);
 
   console.log(numberOfItemsInCurrentPage, "isPageEmpty?", isCurrentPageEmpty);
 

@@ -3,12 +3,12 @@ import usePageQuery from "../Movies/hooks/usePageQuery";
 import { IMoviesState } from "../Movies";
 
 interface Props {
-  moviesStates: IMoviesState;
+  moviesState: IMoviesState;
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const TablePagination = ({ moviesStates, onPageChange }: Props) => {
-  const { currentPage, pageCount } = usePageQuery(moviesStates);
+const TablePagination = ({ moviesState, onPageChange }: Props) => {
+  const { currentPage, pageCount } = usePageQuery(moviesState);
 
   return (
     <Pagination

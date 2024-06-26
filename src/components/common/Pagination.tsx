@@ -1,15 +1,14 @@
 import Pagination from "@mui/material/Pagination";
-import { Movie, PageQuery } from "../../types/Movies";
 import usePageQuery from "../Movies/hooks/usePageQuery";
+import { IMoviesState } from "../Movies";
 
 interface Props {
-  movies: Movie[];
-  pageQuery: PageQuery;
+  moviesStates: IMoviesState;
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const TablePagination = ({ pageQuery, onPageChange, movies }: Props) => {
-  const { currentPage, pageCount } = usePageQuery({ pageQuery, movies });
+const TablePagination = ({ moviesStates, onPageChange }: Props) => {
+  const { currentPage, pageCount } = usePageQuery(moviesStates);
 
   return (
     <Pagination

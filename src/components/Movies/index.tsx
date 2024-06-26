@@ -4,7 +4,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Genre, Movie, PageQuery } from "../../types/Movies";
+import { Genre, Movie, ParentStates } from "../../types/Movies";
 import MoviesTableHead from "./TableHead";
 import MoviesTableBody from "./TableBody";
 import Stack from "@mui/material/Stack";
@@ -14,28 +14,29 @@ import { getGenres } from "../../services/fakeGenreService";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
+  currentPage: number;
+  pageSize: number;
+  orderBy: string;
+  selectedGenre: Genre;
+  genres: Genre[];
   movies: Movie[];
-  pageQuery: PageQuery;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
   state = {
+    currentPage: 1,
+    pageSize: 4,
+    orderBy: "",
     movies: [] as Movie[],
-    pageQuery: {
-      currentPage: 1,
-      pageSize: 4,
-      orderBy: "",
-      movies: [] as Movie[],
-      genres: [] as Genre[],
-      selectedGenre: {} as Genre,
-    },
+    genres: [] as Genre[],
+    selectedGenre: {} as Genre,
   };
 
   componentDidMount(): void {
     const initialState = { ...this.state };
     initialState.movies = getMovies();
-    initialState.pageQuery.movies = getMovies();
-    initialState.pageQuery.genres = getGenres();
+    initialState.movies = getMovies();
+    initialState.genres = getGenres();
     this.setState(initialState);
   }
 
@@ -60,7 +61,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     const newState = { ...this.state };
-    newState.pageQuery.currentPage = value;
+    newState.currentPage = value;
     this.setState(() => newState);
   };
 
@@ -70,12 +71,12 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
       selectedGenre: genre,
     }));
     const newState = { ...this.state };
-    newState.pageQuery.selectedGenre = genre;
+    newState.selectedGenre = genre;
     this.setState(() => newState);
   };
 
   render() {
-    const { movies, pageQuery } = this.state;
+    const { movies } = this.state;
     const isNotAnyMovieInDB = !movies.length;
 
     if (isNotAnyMovieInDB)
@@ -85,7 +86,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <ListGroup
-              pageQuery={pageQuery}
+              moviesStates={this.state}
               onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
             />
           </Grid>
@@ -97,8 +98,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               <Table sx={{ minWidth: "auto" }} aria-label="simple table">
                 <MoviesTableHead />
                 <MoviesTableBody
-                  movies={movies}
-                  pageQuery={pageQuery}
+                  moviesStates={this.state}
                   onDelete={(movie) => this.handleDelete(movie)}
                   onLike={(movie) => this.handleToggleLike(movie)}
                 />
@@ -111,8 +111,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
               spacing={2}
             >
               <TablePagination
-                movies={movies}
-                pageQuery={pageQuery}
+                moviesStates={this.state}
                 onPageChange={this.handlePageChange}
               />
             </Stack>

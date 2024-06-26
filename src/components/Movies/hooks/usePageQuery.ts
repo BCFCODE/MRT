@@ -1,12 +1,11 @@
-import { PageQuery, Movie } from "../../../types/Movies";
+import { IMoviesState } from "..";
 
-interface Props {
-  pageQuery: PageQuery;
-  movies: Movie[];
-}
-
-const usePageQuery = ({ pageQuery, movies }: Props) => {
-  const { currentPage, pageSize, selectedGenre } = pageQuery;
+const usePageQuery = ({
+  movies,
+  currentPage,
+  pageSize,
+  selectedGenre,
+}: IMoviesState) => {
 
   const filteredMovies = selectedGenre._id
     ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)

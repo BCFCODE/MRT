@@ -6,15 +6,16 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChecklistIcon from "@mui/icons-material/Checklist";
-import { Genre, PageQuery } from "../../../types/Movies";
+import { Genre } from "../../../types/Movies";
+import { IMoviesState } from "../../Movies";
 
 interface Props {
-  pageQuery: PageQuery;
+  moviesStates: IMoviesState;
   onSelectGenre: (genre: Genre) => void;
 }
 
-const ListGroup = ({ pageQuery, onSelectGenre }: Props) => {
-  const { genres, selectedGenre } = pageQuery;
+const ListGroup = ({ moviesStates, onSelectGenre }: Props) => {
+  const { genres, selectedGenre } = moviesStates;
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>

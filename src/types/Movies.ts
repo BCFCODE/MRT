@@ -13,7 +13,7 @@ interface Movie {
   liked?: boolean;
 }
 
-interface PageQuery {
+interface ParentStates {
   currentPage: number;
   pageSize: number;
   orderBy: string;
@@ -22,4 +22,4 @@ interface PageQuery {
   movies: Movie[];
 }
 
-export type { Genre, Movie, PageQuery };
+export type { Genre, Movie, ParentStates };

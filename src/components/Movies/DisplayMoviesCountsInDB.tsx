@@ -15,14 +15,14 @@ const DisplayMoviesCountsInDB = ({ moviesState }: Props) => {
   } = useMoviesState(moviesState);
 
   return (
-    <Typography sx={{ display: "inline" }}>
-      {isAnyGenreSelected && (
-        <Typography sx={{ display: "inline" }}>
-          With {numberOfMoviesOnSelectedGenre} films categorized under the{" "}
-          {selectedGenre.name} genre,
-        </Typography>
-      )}
-    {" "} Our movie database boasts a total of {numberOfMoviesInDB} titles.
+    <Typography>
+      {`${
+        isAnyGenreSelected
+          ? `With ${numberOfMoviesOnSelectedGenre} films categorized under the ${selectedGenre.name} genre, `
+          : ""
+      } ${`${
+        isAnyGenreSelected ? "o" : "O"
+      }ur movie database boasts a total of ${numberOfMoviesInDB} titles.`}`}
     </Typography>
   );
 };

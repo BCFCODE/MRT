@@ -16,8 +16,8 @@ interface Props {
 }
 
 const ListGroup = ({ moviesState, onSelectGenre }: Props) => {
-  const { genres, selectedGenre } = useMoviesState(moviesState);
-
+  const { genres, selectedGenre , isAnyGenreSelected} = useMoviesState(moviesState);
+  console.log(selectedGenre, "< selectedGenre in ListGroup", isAnyGenreSelected);
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <nav aria-label="main mailbox folders">

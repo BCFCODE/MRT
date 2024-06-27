@@ -12,6 +12,7 @@ import TablePagination from "../common/Pagination";
 import { ListGroup } from "../common/ListGroup";
 import { getGenres } from "../../services/fakeGenreService";
 import DisplayMoviesCountsInDB from "./DisplayMoviesCountsInDB";
+import Container from "@mui/material/Container";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -83,41 +84,50 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
       return <Typography>There are no movies in the database.</Typography>;
     else
       return (
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <ListGroup
-              moviesState={this.state}
-              onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <Typography>
-              Showing {movies.length} movies in the database.
-            </Typography>
-            <DisplayMoviesCountsInDB   moviesState={this.state}/>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: "auto" }} aria-label="simple table">
-                <MoviesTableHead />
-                <MoviesTableBody
-                  moviesState={this.state}
-                  onDelete={(movie) => this.handleDelete(movie)}
-                  onLike={(movie) => this.handleToggleLike(movie)}
-                />
-              </Table>
-            </TableContainer>
-            <Stack
-              marginTop={2}
-              alignItems="center"
-              justifyContent="center"
-              spacing={2}
-            >
-              <TablePagination
+        <Container
+          maxWidth="lg"
+          sx={{
+            boxShadow: "0 0 10px black",
+            borderRadius: 10,
+            padding: "30px 0",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <ListGroup
                 moviesState={this.state}
-                onPageChange={this.handlePageChange}
+                onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
               />
-            </Stack>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography>
+                Showing {movies.length} movies in the database.
+              </Typography>
+              <DisplayMoviesCountsInDB moviesState={this.state} />
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: "auto" }} aria-label="simple table">
+                  <MoviesTableHead />
+                  <MoviesTableBody
+                    moviesState={this.state}
+                    onDelete={(movie) => this.handleDelete(movie)}
+                    onLike={(movie) => this.handleToggleLike(movie)}
+                  />
+                </Table>
+              </TableContainer>
+              <Stack
+                marginTop={2}
+                alignItems="center"
+                justifyContent="center"
+                spacing={2}
+              >
+                <TablePagination
+                  moviesState={this.state}
+                  onPageChange={this.handlePageChange}
+                />
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
+        </Container>
       );
   }
 }

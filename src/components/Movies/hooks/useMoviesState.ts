@@ -25,8 +25,7 @@ const useMoviesState = ({
     selectedGenre._id
       ? `, with ${
           numberOfMoviesOnSelectedGenre
-            ? `${numberOfMoviesOnSelectedGenre} films categorized under the ${selectedGenre.name}
-      genre.`
+            ? `${numberOfMoviesOnSelectedGenre} films categorized under the ${selectedGenre.name}`
             : `no films have been categorized under the ${selectedGenre.name}`
         } genre.`
       : "."

@@ -6,7 +6,7 @@ const useMoviesState = ({
   pageSize,
   selectedGenre,
 }: IMoviesState) => {
-  const numberOfMoviesInDB = movies.length
+  const numberOfMoviesInDB = movies.length;
   const filteredMovies = selectedGenre._id
     ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)
     : movies;
@@ -21,7 +21,17 @@ const useMoviesState = ({
   const moviesChunk = filteredMovies.slice(startOfPage, endOfPage);
   const isCurrentPageEmpty = !moviesChunk.length;
   const numberOfItemsInCurrentPage = moviesChunk?.length;
-
+  const displayMoviesCountInDBheaderText = `The movie database contains ${numberOfMoviesInDB} titles${
+    selectedGenre._id
+      ? `, with ${
+          numberOfMoviesOnSelectedGenre
+            ? `${numberOfMoviesOnSelectedGenre} films categorized under the ${selectedGenre.name}
+      genre.`
+            : `no films have been categorized under the ${selectedGenre.name}`
+        } genre.`
+      : "."
+  }`;
+  
   return {
     currentPage,
     pageSize,
@@ -33,8 +43,8 @@ const useMoviesState = ({
     numberOfMoviesInDB,
     numberOfMoviesOnSelectedGenre,
     numberOfItemsInCurrentPage,
-    selectedGenre
-    // filteredMovies,
+    selectedGenre,
+    displayMoviesCountInDBheaderText,
   };
 };
 

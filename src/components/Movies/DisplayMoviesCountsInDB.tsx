@@ -7,20 +7,12 @@ interface Props {
 }
 
 const DisplayMoviesCountsInDB = ({ moviesState }: Props) => {
-  const { numberOfMoviesInDB, numberOfMoviesOnSelectedGenre, selectedGenre } =
+  const { numberOfMoviesInDB, displayMoviesCountInDBheaderText } =
     useMoviesState(moviesState);
+
   if (!numberOfMoviesInDB)
     return <Typography>There are no movies in the database.</Typography>;
-  else
-    return (
-      <Typography>{`The movie database contains ${numberOfMoviesInDB} titles${
-        selectedGenre._id
-          ? `, with
-          ${numberOfMoviesOnSelectedGenre} films categorized under the ${selectedGenre.name}
-          genre.`
-          : "."
-      }`}</Typography>
-    );
+  else return <Typography>{displayMoviesCountInDBheaderText}</Typography>;
 };
 
 export default DisplayMoviesCountsInDB;

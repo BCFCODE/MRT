@@ -6,11 +6,12 @@ const useMoviesState = ({
   pageSize,
   selectedGenre,
   genres,
+  isAllGenreSelected,
 }: IMoviesState) => {
   const numberOfMoviesInDB = movies.length;
-  const filteredMovies = selectedGenre._id
-    ? movies?.filter((movie) => movie.genre.name === selectedGenre?.name)
-    : movies;
+  const filteredMovies = isAllGenreSelected
+    ? movies
+    : movies?.filter((movie) => movie.genre.name === selectedGenre?.name);
 
   const numberOfMoviesOnSelectedGenre = selectedGenre._id
     ? filteredMovies.length
@@ -23,7 +24,7 @@ const useMoviesState = ({
   const isCurrentPageEmpty = !moviesChunk.length;
   const numberOfItemsInCurrentPage = moviesChunk?.length;
   const isAnyMovieInDB = Boolean(numberOfMoviesInDB);
-  const isAnyGenreSelected = Boolean(selectedGenre._id)
+  const isAnyGenreSelected = Boolean(selectedGenre._id);
 
   return {
     genres,
@@ -39,7 +40,8 @@ const useMoviesState = ({
     numberOfMoviesOnSelectedGenre,
     selectedGenre,
     isAnyMovieInDB,
-    isAnyGenreSelected
+    isAnyGenreSelected,
+    isAllGenreSelected,
   };
 };
 

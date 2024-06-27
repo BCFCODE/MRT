@@ -12,9 +12,8 @@ interface Props {
 }
 
 const MoviesTableBody = ({ onDelete, onLike, moviesState }: Props) => {
-  const { moviesChunk, isCurrentPageEmpty, numberOfItemsInCurrentPage } =
+  const {moviesChunk, isCurrentPageEmpty, numberOfItemsInCurrentPage } =
     useMoviesState(moviesState);
-
   console.log(numberOfItemsInCurrentPage, "isPageEmpty?", isCurrentPageEmpty);
 
   return (

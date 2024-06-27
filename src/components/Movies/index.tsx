@@ -22,6 +22,7 @@ export interface IMoviesState {
   selectedGenre: Genre;
   genres: Genre[];
   movies: Movie[];
+  isAllGenreSelected: boolean;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
@@ -32,6 +33,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     movies: [] as Movie[],
     genres: [] as Genre[],
     selectedGenre: {} as Genre,
+    isAllGenreSelected: true,
   };
 
   componentDidMount(): void {
@@ -67,13 +69,15 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   };
 
   handleSelectedGenre = (genre: Genre) => {
+    console.log(
+      "this.handleSelectedGenre > genre.name === All Genres",
+      genre.name === "All Genres"
+    );
     this.setState(() => ({
       ...this.state,
       selectedGenre: genre,
+      isAllGenreSelected: genre.name === "All Genres"
     }));
-    const newState = { ...this.state };
-    newState.selectedGenre = genre;
-    this.setState(() => newState);
   };
 
   render() {

@@ -8,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import { Genre } from "../../../types/Movies";
 import { IMoviesState } from "../../Movies";
+import useMoviesState from "../../Movies/hooks/useMoviesState";
 
 interface Props {
   moviesState: IMoviesState;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const ListGroup = ({ moviesState, onSelectGenre }: Props) => {
-  const { genres, selectedGenre } = moviesState;
+  const { genres, selectedGenre } = useMoviesState(moviesState);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>

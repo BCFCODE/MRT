@@ -4,15 +4,15 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Genre, Movie, ParentStates } from "../../types/Movies";
+import { Genre, Movie } from "../../types/Movies";
 import MoviesTableHead from "./TableHead";
 import MoviesTableBody from "./TableBody";
 import Stack from "@mui/material/Stack";
 import TablePagination from "../common/Pagination";
 import { ListGroup } from "../common/ListGroup";
 import { getGenres } from "../../services/fakeGenreService";
-import DisplayMoviesCountsInDB from "./DisplayMoviesCountsInDB";
 import Container from "@mui/material/Container";
+import TableContainerVisibility from "./TableContainerVisibility";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
@@ -77,33 +77,24 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
   };
 
   render() {
-    const { movies } = this.state;
-    const isNotAnyMovieInDB = !movies.length;
-
-    if (isNotAnyMovieInDB)
-      return <Typography>There are no movies in the database.</Typography>;
-    else
-      return (
-        <Container
-          maxWidth="lg"
-          sx={{
-            boxShadow: "0 0 10px black",
-            borderRadius: 10,
-            padding: "30px 0",
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <ListGroup
-                moviesState={this.state}
-                onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <Typography>
-                Showing {movies.length} movies in the database.
-              </Typography>
-              <DisplayMoviesCountsInDB moviesState={this.state} />
+    return (
+      <Container
+        maxWidth="lg"
+        sx={{
+          boxShadow: "0 0 10px black",
+          borderRadius: 10,
+          padding: "30px 0",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <ListGroup
+              moviesState={this.state}
+              onSelectGenre={(genre) => this.handleSelectedGenre(genre)}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TableContainerVisibility moviesState={this.state}>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: "auto" }} aria-label="simple table">
                   <MoviesTableHead />
@@ -125,10 +116,11 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
                   onPageChange={this.handlePageChange}
                 />
               </Stack>
-            </Grid>
+            </TableContainerVisibility>
           </Grid>
-        </Container>
-      );
+        </Grid>
+      </Container>
+    );
   }
 }
 

@@ -1,4 +1,6 @@
 import { IMoviesState } from "..";
+import { SortData } from "../TableHead";
+import useMovieSort from "./useMovieSort";
 
 const useMoviesState = ({
   movies,
@@ -10,6 +12,8 @@ const useMoviesState = ({
   currentSort,
   selectedSortingHeader,
 }: IMoviesState) => {
+  const sortData: SortData = {currentSort, selectedSortingHeader}
+  const {} = useMovieSort(movies, sortData)
   const numberOfMoviesInDB = movies.length;
   const filteredMovies = isAllGenreSelected
     ? movies
@@ -27,8 +31,6 @@ const useMoviesState = ({
   const numberOfItemsInCurrentPage = moviesChunk?.length;
   const isAnyMovieInDB = Boolean(numberOfMoviesInDB);
   const isAnyGenreSelected = Boolean(selectedGenre._id);
-
-  console.log(currentSort, selectedSortingHeader);
 
   return {
     genres,

@@ -7,6 +7,8 @@ const useMoviesState = ({
   selectedGenre,
   genres,
   isAllGenreSelected,
+  currentSort,
+  selectedSortingHeader,
 }: IMoviesState) => {
   const numberOfMoviesInDB = movies.length;
   const filteredMovies = isAllGenreSelected
@@ -25,6 +27,8 @@ const useMoviesState = ({
   const numberOfItemsInCurrentPage = moviesChunk?.length;
   const isAnyMovieInDB = Boolean(numberOfMoviesInDB);
   const isAnyGenreSelected = Boolean(selectedGenre._id);
+
+  console.log(currentSort, selectedSortingHeader);
 
   return {
     genres,

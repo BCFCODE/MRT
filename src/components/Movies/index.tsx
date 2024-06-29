@@ -5,7 +5,11 @@ import TableContainer from "@mui/material/TableContainer";
 import { Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Genre, Movie } from "../../types/Movies";
-import MoviesTableHead from "./TableHead";
+import MoviesTableHead, {
+  TableHeaderGenre,
+  SortDirection,
+  SortData,
+} from "./TableHead";
 import MoviesTableBody from "./TableBody";
 import Stack from "@mui/material/Stack";
 import TablePagination from "../common/Pagination";
@@ -18,22 +22,24 @@ export interface IMoviesProps {}
 export interface IMoviesState {
   currentPage: number;
   pageSize: number;
-  orderBy: string;
-  selectedGenre: Genre;
   genres: Genre[];
   movies: Movie[];
+  selectedGenre: Genre;
   isAllGenreSelected: boolean;
+  selectedSortingHeader: TableHeaderGenre;
+  currentSort: SortDirection;
 }
 
 class Movies extends Component<IMoviesProps, IMoviesState> {
-  state = {
+  state: IMoviesState = {
     currentPage: 1,
     pageSize: 4,
-    orderBy: "",
-    movies: [] as Movie[],
     genres: [] as Genre[],
+    movies: [] as Movie[],
     selectedGenre: {} as Genre,
     isAllGenreSelected: true,
+    selectedSortingHeader: "",
+    currentSort: "asc",
   };
 
   componentDidMount(): void {
@@ -76,8 +82,16 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
     this.setState(() => ({
       ...this.state,
       selectedGenre: genre,
-      isAllGenreSelected: genre.name === "All Genres"
+      isAllGenreSelected: genre.name === "All Genres",
     }));
+  };
+
+  handleTableSort = (newSortData: SortData) => {
+    this.setState(() => ({
+      selectedSortingHeader: newSortData.selectedSortingHeader,
+      currentSort: newSortData.currentSort === "asc" ? "desc" : "asc",
+    }));
+    console.log(this.state.selectedSortingHeader, this.state.currentSort);
   };
 
   render() {
@@ -101,7 +115,9 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
             <TableContainerVisibility moviesState={this.state}>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: "auto" }} aria-label="simple table">
-                  <MoviesTableHead />
+                  <MoviesTableHead
+                    onSort={(newSortData) => this.handleTableSort(newSortData)}
+                  />
                   <MoviesTableBody
                     moviesState={this.state}
                     onDelete={(movie) => this.handleDelete(movie)}

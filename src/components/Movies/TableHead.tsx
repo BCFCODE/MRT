@@ -2,31 +2,46 @@ import { TableSortLabel } from "@mui/material";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Component } from "react";
 
-import React, { Component } from "react";
+export type TableHeaderGenre = "Title" | "Genre" | "Stock" | "Rate" | "";
+export type SortDirection = "asc" | "desc";
 
-export interface IMoviesTableHeadProps {}
+const headers: TableHeaderGenre[] = ["Title", "Genre", "Stock", "Rate"];
 export interface IMoviesTableHeadState {
-  selectedHeader: string;
+  selectedSortingHeader: TableHeaderGenre;
+  currentSort: SortDirection;
 }
 
+export type SortData = IMoviesTableHeadState;
+
+export interface IMoviesTableHeadProps {
+  onSort: (newSortData: SortData) => void;
+}
 class MoviesTableHead extends Component<
   IMoviesTableHeadProps,
   IMoviesTableHeadState
 > {
-  state = { selectedHeader: "" };
+  state: SortData = {
+    selectedSortingHeader: "",
+    currentSort: "asc",
+  };
 
-  handleHeaderClick = (header: string) => {
-    this.setState(() => ({ selectedHeader: header }));
+  handleHeaderClick = (newSortData: SortData) => {
+    this.setState(() => ({
+      selectedSortingHeader: newSortData.selectedSortingHeader,
+      currentSort: newSortData.currentSort === "asc" ? "desc" : "asc",
+    }));
   };
 
   render() {
-    const { selectedHeader } = this.state;
+    const { selectedSortingHeader, currentSort } = this.state;
+    const { onSort } = this.props;
 
     return (
       <TableHead>
         <TableRow>
-          {["Title", "Genre", "Stock", "Rate"].map((header, i) => (
+          {headers.map((header, i) => (
             <TableCell
               key={i}
               align={i ? "right" : "left"}
@@ -35,10 +50,18 @@ class MoviesTableHead extends Component<
               // sortDirection={orderBy === headCell.id ? order : false}
             >
               <TableSortLabel
-                direction={/* orderBy === headCell.id ? order : */ "asc"}
-                active={selectedHeader === header}
-                // onClick={createSortHandler(headCell.id)}
-                onClick={() => this.handleHeaderClick(header)}
+                direction={
+                  selectedSortingHeader === header ? currentSort : "asc"
+                }
+                active={selectedSortingHeader === header}
+                onClick={() => {
+                  const newSortData = {
+                    selectedSortingHeader: header,
+                    currentSort,
+                  };
+                  this.handleHeaderClick(newSortData);
+                  onSort(newSortData);
+                }}
               >
                 {header}
               </TableSortLabel>
@@ -50,4 +73,4 @@ class MoviesTableHead extends Component<
   }
 }
 
-export default MoviesTableHead ;
+export default MoviesTableHead;

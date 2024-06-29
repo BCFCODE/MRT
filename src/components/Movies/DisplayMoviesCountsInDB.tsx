@@ -16,7 +16,7 @@ const DisplayMoviesCountsInDB = ({ moviesState }: Props) => {
   } = useMoviesState(moviesState);
 
   return (
-    <Typography>
+    <Typography marginY={2}>
       {isAllGenreSelected
         ? `Our movie database boasts a total of ${numberOfMoviesInDB} titles.`
         : `${

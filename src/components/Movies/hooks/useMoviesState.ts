@@ -12,16 +12,18 @@ const useMoviesState = ({
   currentSort,
   selectedSortingHeader,
 }: IMoviesState) => {
-  const sortData: SortData = {currentSort, selectedSortingHeader}
-  const {} = useMovieSort(movies, sortData)
+  const sortData: SortData = { currentSort, selectedSortingHeader };
+  const { sortedMovies } = useMovieSort(movies, sortData);
+
   const numberOfMoviesInDB = movies.length;
+
   const filteredMovies = isAllGenreSelected
-    ? movies
-    : movies?.filter((movie) => movie.genre.name === selectedGenre?.name);
+    ? sortedMovies
+    : sortedMovies?.filter((movie) => movie.genre.name === selectedGenre?.name);
 
   const numberOfMoviesOnSelectedGenre = selectedGenre._id
     ? filteredMovies.length
-    : movies?.length;
+    : numberOfMoviesInDB;
 
   const pageCount = Math.ceil(numberOfMoviesOnSelectedGenre / pageSize);
   const endOfPage = currentPage * pageSize;

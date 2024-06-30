@@ -4,7 +4,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Component } from "react";
 
-export type TableHeaderGenre = "Title" | "Genre" | "Stock" | "Rate" | "";
+export type TableHeaderGenre = "Title" | "Genre" | "Stock" | "Rate" | "" ;
 export type SortDirection = "asc" | "desc";
 
 const headers: TableHeaderGenre[] = ["Title", "Genre", "Stock", "Rate"];

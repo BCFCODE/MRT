@@ -2,7 +2,7 @@ import { Component } from "react";
 import { getMovies } from "../../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { Genre, Movie } from "../../types/Movies";
 import MoviesTableHead, {

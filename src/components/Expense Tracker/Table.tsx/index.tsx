@@ -1,62 +1,44 @@
-import { Component } from "react";
 import { Box } from "@mui/material";
-import { MainTable } from "./Table";
-import { items } from "../constants";
 import { Item } from "../types";
-import { Categories } from "./Categories";
+import Categories from "./Categories";
+import MainTable from "./Table";
+import { useState } from "react";
 
-export interface IExpenseTableProps {}
-export interface IExpenseTableState {
+interface Props {
   items: Item[];
-  selectedCategory: string;
+  onDelete: (index: number) => void;
 }
 
-class ExpenseTable extends Component<IExpenseTableProps, IExpenseTableState> {
-  state = { items, selectedCategory: "all categories" };
+const ExpenseTable = ({ items, onDelete }: Props) => {
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>("all categories");
 
-  handleSelect = (value: string) => {
-    this.setState((state) => ({
-      ...state,
-      selectedCategory: value,
-    }));
+  const handleSelect = (value: string) => {
+    setSelectedCategory(value);
   };
 
-  handleDelete = (indexOfItemPosition: number) => {
-    const { items } = this.state;
-    const filteredItems = items.filter((_, i) => indexOfItemPosition !== i);
-    this.setState((state) => ({
-      ...state,
-      items: filteredItems,
-    }));
-  };
+  const filteredItems =
+    selectedCategory === "all categories"
+      ? items
+      : items.filter((item) => item.category === selectedCategory);
 
-  render() {
-    const {
-      state: { selectedCategory, items },
-      handleSelect,
-      handleDelete,
-    } = this;
+  return (
+    <Box
+      sx={{
+        boxShadow: "0 0 10px 8px  hsla(121, 78.60%, 49.40%, 30%)",
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        p: 2,
+      }}
+    >
+      <Categories onSelect={(value) => handleSelect(value)} />
+      <MainTable
+        onDelete={(i) => onDelete(i)}
+        filteredItems={filteredItems}
+      />
+    </Box>
+  );
+};
 
-    const filteredItems =
-      selectedCategory === "all categories"
-        ? items
-        : items.filter((item) => item.category === selectedCategory);
-
-    return (
-      <Box
-        sx={{
-          boxShadow: "0 0 10px 8px  hsla(121, 78.60%, 49.40%, 30%)",
-          display: "flex",
-          flexDirection: "column",
-          gap: 1,
-          p: 2,
-        }}
-      >
-        <Categories onSelect={(value) => handleSelect(value)} />
-        <MainTable onDelete={(i) => handleDelete(i)} items={filteredItems} />
-      </Box>
-    );
-  }
-}
-
-export { ExpenseTable };
+export default ExpenseTable;

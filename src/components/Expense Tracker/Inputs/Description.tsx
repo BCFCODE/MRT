@@ -1,22 +1,20 @@
 import { TextField } from "@mui/material";
-import React, { Component } from "react";
 
-export interface IDescriptionProps {}
-export interface IDescriptionState {}
-
-class Description extends Component<IDescriptionProps, IDescriptionState> {
-  state = {};
-
-  render() {
-    return (
-      <TextField
-        required
-        id="outlined-required"
-        label="Description"
-        // defaultValue="Hello World"
-      />
-    );
-  }
+interface Props {
+  onDescription: (inputDescription: string) => void;
 }
 
-export { Description };
+const Description = ({ onDescription }: Props) => {
+  return (
+    <TextField
+      onChange={(e) => onDescription((e.target as HTMLInputElement).value)}
+      type="text"
+      required
+      id="description-input"
+      placeholder="Description"
+      // defaultValue="Hello World"
+    />
+  );
+};
+
+export default Description;

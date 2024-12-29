@@ -4,7 +4,8 @@ import "./App.css";
 import ExpenseTrackerApp from "./components/Expense Tracker/index.tsx";
 import MovieTable from "./components/MovieTable/index.tsx";
 
-function App() {
+
+const App = () => {
   return (
     <Box>
       <Grid container spacing={3}>
@@ -13,6 +14,6 @@ function App() {
       </Grid>
     </Box>
   );
-}
+} 
 
 export default App;

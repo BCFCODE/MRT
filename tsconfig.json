@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "index.tsx"],
+  "include": ["src", "src/components/Expense Tracker/Inputs/index.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -11,14 +11,14 @@ import { Item } from "../types";
 
 export interface IMainTableProps {
   items: Item[];
+  onDelete: (index: number) => void
 }
 export interface IMainTableState {}
 
 class MainTable extends Component<IMainTableProps, IMainTableState> {
   state = {};
-
   render() {
-    const { items } = this.props;
+    const { items, onDelete } = this.props;
     const total = items.reduce((acc, b) => acc + b.amount, 0);
     return (
       <TableContainer component={Paper}>
@@ -49,7 +49,7 @@ class MainTable extends Component<IMainTableProps, IMainTableState> {
                   )}
                 </TableCell>
                 <TableCell align="center">
-                  <Button variant="contained" color="error">
+                  <Button onClick={() => onDelete(i)} variant="contained" color="error">
                     Delete
                   </Button>
                 </TableCell>

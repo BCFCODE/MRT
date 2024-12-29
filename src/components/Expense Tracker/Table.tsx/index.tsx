@@ -9,26 +9,39 @@ import { Categories } from "./Categories";
 export interface IExpenseTableProps {}
 export interface IExpenseTableState {
   items: Item[];
-  filteredItems: Item[];
+  selectedCategory: string;
 }
 
 class ExpenseTable extends Component<IExpenseTableProps, IExpenseTableState> {
-  state = { items, filteredItems: items };
+  state = { items, selectedCategory: "all categories" };
 
   handleSelect = (value: string) => {
-    const { items } = this.state;
-    const filteredItems = items.filter((item) => item.category === value);
     this.setState((state) => ({
       ...state,
-      filteredItems: value === "all categories" ? items : filteredItems,
+      selectedCategory: value,
+    }));
+  };
+
+  handleDelete = (indexOfItemPosition: number) => {
+    const { items } = this.state;
+    const filteredItems = items.filter((_, i) => indexOfItemPosition !== i);
+    this.setState((state) => ({
+      ...state,
+      items: filteredItems,
     }));
   };
 
   render() {
     const {
-      state: { filteredItems },
+      state: { selectedCategory, items },
       handleSelect,
+      handleDelete,
     } = this;
+
+    const filteredItems =
+      selectedCategory === "all categories"
+        ? items
+        : items.filter((item) => item.category === selectedCategory);
 
     return (
       <Box
@@ -41,7 +54,7 @@ class ExpenseTable extends Component<IExpenseTableProps, IExpenseTableState> {
         }}
       >
         <Categories onSelect={(value) => handleSelect(value)} />
-        <MainTable items={filteredItems} />
+        <MainTable onDelete={(i) => handleDelete(i)} items={filteredItems} />
       </Box>
     );
   }

@@ -3,9 +3,11 @@ import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import "./App.css";
-import { ExpenseTracker } from "./components/Expense Tracker";
+
 import GenreList from "./components/GenreList";
 import { Movies } from "./components/Movies";
+import { ExpenseInputs } from "..";
+import { ExpenseTable } from "./components/Expense Tracker/Table.tsx";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -21,12 +23,12 @@ const Item = styled(Paper)(({ theme }) => ({
 function App() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid size={8}>
-          <Item>size=8</Item>
+          <ExpenseTable />
         </Grid>
         <Grid size={4}>
-          <ExpenseTracker />
+          <ExpenseInputs />
         </Grid>
         <Grid size={4}>
           <GenreList />

@@ -1,46 +1,52 @@
 import { MenuItem, TextField } from "@mui/material";
 import { Component } from "react";
 
-export interface ICategoriesProps {}
+export interface ICategoriesProps {
+  onSelect: (value: string) => void;
+}
 export interface ICategoriesState {}
 
 const categories = [
   {
-    value: "All categories",
+    value: "all categories",
     label: "All categories",
   },
   {
-    value: "Groceries",
+    value: "groceries",
     label: "Groceries",
   },
   {
-    value: "Utilities",
+    value: "utilities",
     label: "Utilities",
   },
   {
-    value: "Entertainment",
+    value: "entertainment",
     label: "Entertainment",
   },
 ];
 
 class Categories extends Component<ICategoriesProps, ICategoriesState> {
   state = {};
-
   render() {
+    const { onSelect } = this.props;
     return (
       <TextField
         sx={{
           textAlign: "left",
         }}
-        id="category"
+        id="main-table-category"
         select
         label="Category"
-        defaultValue="All Categories"
-        // helperText="Select category to show on the table"
+        defaultValue="All categories"
+        helperText="Please select category to show on table"
       >
-        {categories.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
+        {categories.map((category) => (
+          <MenuItem
+            onClick={() => onSelect(category.value)}
+            key={category.value}
+            value={category.value}
+          >
+            {category.label}
           </MenuItem>
         ))}
       </TextField>

@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,59 +7,58 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Component } from "react";
+import { Item } from "../types";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+export interface IMainTableProps {
+  items: Item[];
 }
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export interface IMainTableProps {}
 export interface IMainTableState {}
 
 class MainTable extends Component<IMainTableProps, IMainTableState> {
   state = {};
 
   render() {
+    const { items } = this.props;
+    const total = items.reduce((acc, b) => acc + b.amount, 0);
     return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell>Number in List</TableCell>
+              <TableCell align="left">Amount&nbsp;($)</TableCell>
+              <TableCell align="left">Description</TableCell>
+              <TableCell align="left">Category</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {items.map((row, i) => (
               <TableRow
-                key={row.name}
+                key={`${i} - ${row.description}`}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {i + 1}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="left">{row.amount.toFixed(2)}</TableCell>
+                <TableCell align="left">{row.description}</TableCell>
+                <TableCell align="left">
+                  {row.category.replace(/\b\w/, (firstChar) =>
+                    firstChar.toUpperCase()
+                  )}
+                </TableCell>
+                <TableCell align="center">
+                  <Button variant="contained" color="error">
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
+            <TableRow>
+              <TableCell align="right">Total:</TableCell>
+              <TableCell align="left">{total.toFixed(2)}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
@@ -67,3 +67,4 @@ class MainTable extends Component<IMainTableProps, IMainTableState> {
 }
 
 export { MainTable };
+

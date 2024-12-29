@@ -18,7 +18,7 @@ const MoviesTableBody = ({ movies, onDelete, onLike, pageQuery }: Props) => {
       movies,
     });
 
-  console.log(numberOfItemsInCurrentPage, "isPageEmpty?", isCurrentPageEmpty);
+  // console.log(numberOfItemsInCurrentPage, "isPageEmpty?", isCurrentPageEmpty);
 
   return (
     <TableBody>

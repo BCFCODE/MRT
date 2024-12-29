@@ -38,7 +38,7 @@ class Movies extends Component<IMoviesProps, IMoviesState> {
 
   handleToggleLike = (currentMovie: Movie) => {
     const isCurrentMovieLiked = Boolean(currentMovie.liked);
-    console.log(currentMovie._id);
+    // console.log(currentMovie._id);
     this.setState(({ movies }) => ({
       movies: movies.map((movie) =>
         movie._id === currentMovie._id

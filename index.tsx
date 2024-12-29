@@ -16,9 +16,9 @@ class ExpenseInputs extends Component<IExpenseInputs, IExpenseInputsState> {
         component="section"
         sx={{
           p: 2,
-          border: "2px solid yellowgreen",
-          borderRadius: "2%",
-          boxShadow: "0 0 10px 20% yellowgreen",
+          borderRadius: 5,
+          boxShadow: "0 0 5px 2px  hsla(121, 78.60%, 49.40%, 0.30)",
+          flexGrow: 1,
           display: "flex",
           flexDirection: "column",
           gap: "10px",

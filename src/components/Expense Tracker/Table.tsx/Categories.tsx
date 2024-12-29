@@ -6,6 +6,10 @@ export interface ICategoriesState {}
 
 const categories = [
   {
+    value: "All categories",
+    label: "All categories",
+  },
+  {
     value: "Groceries",
     label: "Groceries",
   },
@@ -31,8 +35,8 @@ class Categories extends Component<ICategoriesProps, ICategoriesState> {
         id="category"
         select
         label="Category"
-        defaultValue=""
-        helperText="Please select your Category"
+        defaultValue="All Categories"
+        // helperText="Select category to show on the table"
       >
         {categories.map((option) => (
           <MenuItem key={option.value} value={option.value}>

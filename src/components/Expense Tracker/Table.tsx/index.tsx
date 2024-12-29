@@ -1,7 +1,6 @@
-import { Box } from "@mui/material";
 import { Component } from "react";
+import { Box } from "@mui/material";
 import { MainTable } from "./Table";
-
 import { items } from "../constants";
 import { Item } from "../types";
 import { Categories } from "./Categories";

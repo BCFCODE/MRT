@@ -13,7 +13,7 @@ class Description extends Component<IDescriptionProps, IDescriptionState> {
         required
         id="outlined-required"
         label="Description"
-        defaultValue="Hello World"
+        // defaultValue="Hello World"
       />
     );
   }

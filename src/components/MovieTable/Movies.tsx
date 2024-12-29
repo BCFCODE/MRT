@@ -1,14 +1,14 @@
 import { Component } from "react";
-import { getMovies } from "../services/fakeMovieService";
+import { getMovies } from "../../services/fakeMovieService";
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import { Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { Movie, PageQuery } from "../types/Movies";
-import MoviesTableHead from "./MovieTable/TableHead";
-import MoviesTableBody from "./MovieTable/TableBody";
+import { Movie, PageQuery } from "../../types/Movies";
+import MoviesTableHead from "./TableHead";
+import MoviesTableBody from "./TableBody";
 import Stack from "@mui/material/Stack";
-import TablePagination from "./common/Pagination";
+import TablePagination from "../common/Pagination";
 
 export interface IMoviesProps {}
 export interface IMoviesState {
